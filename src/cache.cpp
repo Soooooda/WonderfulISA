@@ -1,5 +1,6 @@
 #include "cache.hpp"
 using namespace std;
+
 // 构造函数
 Cache::Cache()
 {
@@ -12,6 +13,7 @@ Cache::Cache(int length, int size, int delay, Cache *next)
     cache_size = size;
     cache_delay = delay;
     next_level = next;
+    cache = (bool*)malloc(sizeof(bool) * cache_size);
     cout << "Cache instantiated" << endl;
 }
 
@@ -29,9 +31,10 @@ string Cache::read(int address)
 }
 
 //for write, store the line into the memory array
-string Cache::write(int address)
+string Cache::write(int address, int value)
 {
     cout << "wait" << endl;
+    cache_delay+=3;
     cout << "done! the line is stored" << endl;
     return "done";
 }

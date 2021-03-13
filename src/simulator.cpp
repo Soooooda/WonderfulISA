@@ -7,11 +7,10 @@
 
 #include "cache.hpp"
 using namespace std;
-#define MEMORY_SIZE 100000
 class Simulator
 {
     public:
-        int memory[MEMORY_SIZE];
+        int *memory;
         Cache l1_cache;
         Cache l2_cache;
         Simulator();
@@ -20,12 +19,13 @@ class Simulator
 
 Simulator::Simulator()
 {
+    memory = (int*) malloc(sizeof(int) * 512*1024*1024);
     cout<<"constructed!"<<endl;
 }
 
 void Simulator::instantiate()
 {
-    l1_cache = Cache(1,1,1,NULL);
+    l1_cache = Cache(16,16*23,1,NULL);
     cout<<"instantiate succees!"<<endl;
 }
 

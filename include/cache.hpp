@@ -1,11 +1,19 @@
 #include <iostream>
 using namespace std;
+#define TAG_OFFSET 0
+#define INDEX_OFFSET 2
+#define DIRTY_OFFSET 5
+#define VALID_OFFSET 6
+#define FIRST_OFFSET 7
+#define SECOND_OFFSET 15
 // Instantiate DRAM level with constructor having default of no lower level 
 // Has line length, size (data array dimensions), delay
 // Instantiate cache level with size, delay, pointer to level below 
 // Get line length from level below, using getter method
 // Both support line length read and write with delay 
 // Additional API for giving UI direct access to contents
+// tag index dirty valid offset0 offset1
+// 2   3     1     1     8       8
 class Cache
 {
     public:
@@ -14,12 +22,13 @@ class Cache
         bool setLineLength(int length);  // 成员函数声明
         int getNextLevelLineLength();
         string read(int address);
-        string write(int address);
+        string write(int address, int value);
         void view();
     
     private:
         int line_length;   // line长度
         int cache_size;  // 缓存大小
         int cache_delay;   // 延迟
+        bool *cache; //缓存
         Cache *next_level;
 };

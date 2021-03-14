@@ -7,8 +7,10 @@ Cache::Cache()
 
 }
 
-Cache::Cache(int length, int size, int delay, Cache *next)
+Cache::Cache(int length, int size, int delay, int time, int count, Cache *next)
 {
+    time_cycle = time;
+    cache_count = count;
     line_length = length;
     cache_size = size;
     cache_delay = delay;
@@ -25,6 +27,13 @@ int Cache::getNextLevelLineLength()
 //For read, also return line
 string Cache::read(int address)
 {
+    while (cache_count != 0)
+    {
+        cout <<"wait";
+        cache_delay = 0;
+
+    }
+    
     cout << "wait" << endl;
     
     return "done";

@@ -21,7 +21,7 @@ class Cache
         Cache(int length, int size, int delay, int time, int count, Cache *next);  // 这是构造函数
         bool setLineLength(int length);  // 成员函数声明
         int getNextLevelLineLength();
-        string read(int address);
+        int read(int address);
         string write(int address, int value);
         void view();
     
@@ -31,7 +31,7 @@ class Cache
         int cache_delay;   // 延迟
         int cache_count;    //命令统计
         int time_cycle;     //时间统计
-        int temp_cache[5];  //caches试行
+        int temp_cache[16][5];  //caches试行
         bool *cache; //缓存
         Cache *next_level;
 };

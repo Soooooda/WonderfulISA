@@ -41,6 +41,7 @@ class Cache
         void set_dirty(int16_t line, int16_t flag);
         void set_valid(int16_t line, int16_t flag);
         void write_value(int16_t line, int16_t offset, int16_t value);
+        CacheLine* cache; //缓存
     
     private:
         int16_t line_length;   // line长度
@@ -49,6 +50,6 @@ class Cache
         int16_t cache_count;    //命令统计
         int16_t time_cycle;     //时间统计
         int16_t temp_cache[16][5];  //caches试行
-        CacheLine* cache; //缓存
+
         Cache *next_level;
 };

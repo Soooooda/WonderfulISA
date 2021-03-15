@@ -4,22 +4,7 @@
 // May also return a bounds error
 // A cache has a pointer to a lower level memory
 // Can write one class, and instantiate each level, giving the constructor its parameters and a pointer to the level below
-#include "cache.hpp"
-#define BLOCK_OFFSET ((1<<16)-4)
-#define ADDRESS_OFFSET 3
-using namespace std;
-class Simulator
-{
-    public:
-        int16_t *memory;
-        Cache l1_cache;
-        Cache l2_cache;
-        Simulator();
-        string write_memory(int16_t address, int16_t value);
-        string read_memory(int16_t address);
-        void instantiate();
-};
-
+#include "../include/simulator.hpp"
 Simulator::Simulator()
 {
     
@@ -123,36 +108,36 @@ string Simulator::read_memory(int16_t address)
     return "wait";
 }
 
-int main()
-{
-    Simulator simulator;
-    simulator.instantiate();
-    simulator.write_memory(0x6, 773);
-    simulator.write_memory(0x6, 66);
-    simulator.write_memory(0x1b3, 54);
-    simulator.write_memory(0x43, 8754);
-    simulator.write_memory(0x7, 75);
-    simulator.write_memory(0x9, 3);
-    simulator.write_memory(0x432, 23);
-    simulator.write_memory(0xbba2, 543);
-    simulator.write_memory(0x1e, 3);
-    simulator.write_memory(0x43, 23);
-    simulator.write_memory(0x53b, 543);
-    simulator.write_memory(0x2, 23);
-    simulator.write_memory(0x99, 543);
-    simulator.write_memory(0x999, 3);
-    simulator.write_memory(0x123, 23);
-    simulator.write_memory(0x6, 4);
-    simulator.write_memory(0x12, 87);
-    simulator.write_memory(0x919, 777);
-    simulator.write_memory(0x999, 49);
-    simulator.write_memory(0x1273, 123);
-    simulator.write_memory(0x68, 5);
+// int main()
+// {
+//     Simulator simulator;
+//     simulator.instantiate();
+//     simulator.write_memory(0x6, 773);
+//     simulator.write_memory(0x6, 66);
+//     simulator.write_memory(0x1b3, 54);
+//     simulator.write_memory(0x43, 8754);
+//     simulator.write_memory(0x7, 75);
+//     simulator.write_memory(0x9, 3);
+//     simulator.write_memory(0x432, 23);
+//     simulator.write_memory(0xbba2, 543);
+//     simulator.write_memory(0x1e, 3);
+//     simulator.write_memory(0x43, 23);
+//     simulator.write_memory(0x53b, 543);
+//     simulator.write_memory(0x2, 23);
+//     simulator.write_memory(0x99, 543);
+//     simulator.write_memory(0x999, 3);
+//     simulator.write_memory(0x123, 23);
+//     simulator.write_memory(0x6, 4);
+//     simulator.write_memory(0x12, 87);
+//     simulator.write_memory(0x919, 777);
+//     simulator.write_memory(0x999, 49);
+//     simulator.write_memory(0x1273, 123);
+//     simulator.write_memory(0x68, 5);
 
-    simulator.read_memory(0x7);
-    simulator.write_memory(0x7, 123);
-    simulator.read_memory(0x7);
-    simulator.write_memory(0x7, 23);
+//     simulator.read_memory(0x7);
+//     simulator.write_memory(0x7, 123);
+//     simulator.read_memory(0x7);
+//     simulator.write_memory(0x7, 23);
     
-    return 0;
-}
+//     return 0;
+// }

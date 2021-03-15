@@ -1,4 +1,4 @@
-#include "cache.hpp"
+#include "../include/cache.hpp"
 using namespace std;
 
 // 构造函数

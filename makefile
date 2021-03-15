@@ -8,9 +8,9 @@ LIBS := -lm
 TARGET := demo.exe
 
 SRCDIR := src
-TESTDIR := test
+UIDIR := ui
 SRCOBJS := $(patsubst %.cpp, %.o, $(wildcard $(SRCDIR)/*.cpp))
-TESTOBJS := $(patsubst %.cpp, %.o, $(wildcard $(TESTDIR)/*.cpp))
+TESTOBJS := $(patsubst %.cpp, %.o, $(wildcard $(UIDIR)/*.cpp))
 OBJS := $(SRCOBJS) $(TESTOBJS)
 
 all: $(TARGET)

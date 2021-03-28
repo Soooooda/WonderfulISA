@@ -10,7 +10,9 @@ MainWindow::MainWindow(QWidget *parent)
     //cache
     //cache consists of 16 cachelines
     ui->cacheTable->setRowCount(16);
-    ui->cacheTable->setColumnCount(8);
+    ui->cacheTable->setColumnCount(7);
+    ui->cacheTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->cacheTable->resizeRowsToContents();
     ui->cacheTable->setWindowTitle("Cache View");
     QStringList cache_header;
     cache_header<<"header"<<"valid"<<"dirty"<<"offset0"<<"offset1"<<"offset2"<<"offset3"<<"lru";
@@ -20,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
     //memory = (int16_t*) malloc(sizeof(int16_t) *1024*64); //memory is 2^16 * word(16bit)
     ui->memoryTable->setRowCount(10000);
     ui->memoryTable->setColumnCount(2);
+    ui->memoryTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->memoryTable->setWindowTitle("Memory View");
     QStringList memory_header;
     memory_header<<"address"<<"value";
@@ -71,15 +74,18 @@ void MainWindow::refresh_memory()
 }
 
 
+//get value from memory
 void MainWindow::on_pushButton_2_clicked()
 {
-//    int16_t value = ui->inputValue->toPlainText().toInt();
     int16_t address = ui->inputMemory->toPlainText().toInt();
-    simulator.read_memory(address);
+    int16_t value = simulator.read_memory(address);
     refresh_cache();
     refresh_memory();
+    //set read value
+    ui->inputValue->setText(QString::fromStdString(to_string(value)));
 }
 
+//write to memory
 void MainWindow::on_pushButton_3_clicked()
 {
         int16_t value = ui->inputValue->toPlainText().toInt();

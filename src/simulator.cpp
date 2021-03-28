@@ -13,7 +13,8 @@ Simulator::Simulator()
 void Simulator::instantiate()
 {
     // l1_cache = Cache(16,16*23,1,NULL);
-    memory = (int16_t*) malloc(sizeof(int16_t) *1024*64);//memory大小为2^16*int
+    //memory大小为2^16*int16
+    memory = (int16_t*) malloc(sizeof(int16_t) *1024*64);
     memset(memory, 0, sizeof(int16_t) *1024*64);
     cout<<"memory constructed!"<<endl;
 
@@ -32,7 +33,7 @@ string Simulator::write_memory(int16_t address, int16_t value)
     if(cache_line==-1)
     {
         cout<<"write miss"<<endl;
-        cache_line = l1_cache.find_line();
+        cache_line = l1_cache.evict_line(address);
         cout<<"find line: "<<cache_line<<endl;
         if(l1_cache.is_dirty(cache_line))
         {
@@ -52,6 +53,7 @@ string Simulator::write_memory(int16_t address, int16_t value)
         }
         //write cache
         l1_cache.write_from_memory(address, cache_line, memory+(address&BLOCK_OFFSET));
+        l1_cache.set_dirty(cache_line, 1);
     }
     else
     {
@@ -69,7 +71,7 @@ string Simulator::write_memory(int16_t address, int16_t value)
 }
 
 
-string Simulator::read_memory(int16_t address)
+int16_t Simulator::read_memory(int16_t address)
 {
     // printf("memory address read: %p, value: %d\n", address, *(memory+address));
     // l1_cache.read(address);
@@ -77,7 +79,7 @@ string Simulator::read_memory(int16_t address)
     if(cache_line==-1)
     {
         cout<<"read miss"<<endl;
-        cache_line = l1_cache.find_line();
+        cache_line = l1_cache.evict_line(address);
         cout<<"find line: "<<cache_line<<endl;
         if(l1_cache.is_dirty(cache_line))
         {
@@ -105,39 +107,5 @@ string Simulator::read_memory(int16_t address)
     int16_t offset = address&ADDRESS_OFFSET;
     cout<<block[offset]<<endl;
     l1_cache.view();
-    return "wait";
+    return block[offset];
 }
-
-// int main()
-// {
-//     Simulator simulator;
-//     simulator.instantiate();
-//     simulator.write_memory(0x6, 773);
-//     simulator.write_memory(0x6, 66);
-//     simulator.write_memory(0x1b3, 54);
-//     simulator.write_memory(0x43, 8754);
-//     simulator.write_memory(0x7, 75);
-//     simulator.write_memory(0x9, 3);
-//     simulator.write_memory(0x432, 23);
-//     simulator.write_memory(0xbba2, 543);
-//     simulator.write_memory(0x1e, 3);
-//     simulator.write_memory(0x43, 23);
-//     simulator.write_memory(0x53b, 543);
-//     simulator.write_memory(0x2, 23);
-//     simulator.write_memory(0x99, 543);
-//     simulator.write_memory(0x999, 3);
-//     simulator.write_memory(0x123, 23);
-//     simulator.write_memory(0x6, 4);
-//     simulator.write_memory(0x12, 87);
-//     simulator.write_memory(0x919, 777);
-//     simulator.write_memory(0x999, 49);
-//     simulator.write_memory(0x1273, 123);
-//     simulator.write_memory(0x68, 5);
-
-//     simulator.read_memory(0x7);
-//     simulator.write_memory(0x7, 123);
-//     simulator.read_memory(0x7);
-//     simulator.write_memory(0x7, 23);
-    
-//     return 0;
-// }

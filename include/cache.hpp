@@ -2,6 +2,7 @@
 #include <cstring>
 using namespace std;
 #define TAG_INDEX_FLAG ((1<<16)-4)
+#define TAG_INDEX_OFFSET 2
 #define DIRTY_FLAG (1<<1)
 #define VALID_FLAG 1
 #define BLOCK_SIZE 16*4
@@ -33,7 +34,7 @@ class Cache
         void view();
         int16_t request_cache(int16_t address);
         bool write_from_memory(int16_t address, int16_t line, int16_t* block);
-        int16_t find_line();
+        int16_t evict_line(int16_t address);
         void adjust_LRU(int16_t line);
         bool is_dirty(int16_t line);
         int16_t get_start_address(int16_t line);
@@ -49,7 +50,6 @@ class Cache
         int16_t cache_delay;   // 延迟
         int16_t cache_count;    //命令统计
         int16_t time_cycle;     //时间统计
-        int16_t temp_cache[16][5];  //caches试行
 
         Cache *next_level;
 };

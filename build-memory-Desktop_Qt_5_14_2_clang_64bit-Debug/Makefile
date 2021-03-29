@@ -52,11 +52,27 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../src/cache.cpp \
+SOURCES       = ../src/Decode.cpp \
+		../src/Execute.cpp \
+		../src/Fetch.cpp \
+		../src/MemoryAccess.cpp \
+		../src/PipeLine.cpp \
+		../src/Register.cpp \
+		../src/Stage.cpp \
+		../src/WriteBack.cpp \
+		../src/cache.cpp \
 		../src/main.cpp \
 		../src/mainwindow.cpp \
 		../src/simulator.cpp moc_mainwindow.cpp
-OBJECTS       = cache.o \
+OBJECTS       = Decode.o \
+		Execute.o \
+		Fetch.o \
+		MemoryAccess.o \
+		PipeLine.o \
+		Register.o \
+		Stage.o \
+		WriteBack.o \
+		cache.o \
 		main.o \
 		mainwindow.o \
 		simulator.o \
@@ -268,9 +284,25 @@ DIST          = ../../../../Applications/Qt/5.14.2/clang_64/mkspecs/features/spe
 		../../../../Applications/Qt/5.14.2/clang_64/mkspecs/features/exceptions.prf \
 		../../../../Applications/Qt/5.14.2/clang_64/mkspecs/features/yacc.prf \
 		../../../../Applications/Qt/5.14.2/clang_64/mkspecs/features/lex.prf \
-		../ui/memory.pro ../include/cache.hpp \
+		../ui/memory.pro ../include/Decode.h \
+		../include/Execute.h \
+		../include/Fetch.h \
+		../include/MemoryAccess.h \
+		../include/PipeLine.hpp \
+		../include/Register.h \
+		../include/Stage.h \
+		../include/WriteBack.h \
+		../include/cache.hpp \
 		../include/mainwindow.h \
-		../include/simulator.hpp ../src/cache.cpp \
+		../include/simulator.hpp ../src/Decode.cpp \
+		../src/Execute.cpp \
+		../src/Fetch.cpp \
+		../src/MemoryAccess.cpp \
+		../src/PipeLine.cpp \
+		../src/Register.cpp \
+		../src/Stage.cpp \
+		../src/WriteBack.cpp \
+		../src/cache.cpp \
 		../src/main.cpp \
 		../src/mainwindow.cpp \
 		../src/simulator.cpp
@@ -749,8 +781,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Applications/Qt/5.14.2/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../include/cache.hpp ../include/mainwindow.h ../include/simulator.hpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../src/cache.cpp ../src/main.cpp ../src/mainwindow.cpp ../src/simulator.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../include/Decode.h ../include/Execute.h ../include/Fetch.h ../include/MemoryAccess.h ../include/PipeLine.hpp ../include/Register.h ../include/Stage.h ../include/WriteBack.h ../include/cache.hpp ../include/mainwindow.h ../include/simulator.hpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../src/Decode.cpp ../src/Execute.cpp ../src/Fetch.cpp ../src/MemoryAccess.cpp ../src/PipeLine.cpp ../src/Register.cpp ../src/Stage.cpp ../src/WriteBack.cpp ../src/cache.cpp ../src/main.cpp ../src/mainwindow.cpp ../src/simulator.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../ui/mainwindow.ui $(DISTDIR)/
 
 
@@ -790,6 +822,16 @@ compiler_moc_header_make_all: moc_mainwindow.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_mainwindow.cpp
 moc_mainwindow.cpp: ../include/mainwindow.h \
+		../include/simulator.hpp \
+		../include/cache.hpp \
+		../include/PipeLine.hpp \
+		../include/Decode.h \
+		../include/Stage.h \
+		../include/Execute.h \
+		../include/Register.h \
+		../include/Fetch.h \
+		../include/MemoryAccess.h \
+		../include/WriteBack.h \
 		../../../../Applications/Qt/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../../Applications/Qt/5.14.2/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		moc_predefs.h \
@@ -819,10 +861,71 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 ####### Compile
 
+Decode.o: ../src/Decode.cpp ../include/Decode.h \
+		../include/Stage.h \
+		../include/simulator.hpp \
+		../include/cache.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Decode.o ../src/Decode.cpp
+
+Execute.o: ../src/Execute.cpp ../include/Execute.h \
+		../include/Stage.h \
+		../include/simulator.hpp \
+		../include/cache.hpp \
+		../include/Register.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Execute.o ../src/Execute.cpp
+
+Fetch.o: ../src/Fetch.cpp ../include/Fetch.h \
+		../include/Stage.h \
+		../include/simulator.hpp \
+		../include/cache.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Fetch.o ../src/Fetch.cpp
+
+MemoryAccess.o: ../src/MemoryAccess.cpp ../include/MemoryAccess.h \
+		../include/Stage.h \
+		../include/simulator.hpp \
+		../include/cache.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MemoryAccess.o ../src/MemoryAccess.cpp
+
+PipeLine.o: ../src/PipeLine.cpp ../include/PipeLine.hpp \
+		../include/Decode.h \
+		../include/Stage.h \
+		../include/simulator.hpp \
+		../include/cache.hpp \
+		../include/Execute.h \
+		../include/Register.h \
+		../include/Fetch.h \
+		../include/MemoryAccess.h \
+		../include/WriteBack.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o PipeLine.o ../src/PipeLine.cpp
+
+Register.o: ../src/Register.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Register.o ../src/Register.cpp
+
+Stage.o: ../src/Stage.cpp ../include/Stage.h \
+		../include/simulator.hpp \
+		../include/cache.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Stage.o ../src/Stage.cpp
+
+WriteBack.o: ../src/WriteBack.cpp ../include/WriteBack.h \
+		../include/Stage.h \
+		../include/simulator.hpp \
+		../include/cache.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o WriteBack.o ../src/WriteBack.cpp
+
 cache.o: ../src/cache.cpp ../include/cache.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cache.o ../src/cache.cpp
 
 main.o: ../src/main.cpp ../include/mainwindow.h \
+		../include/simulator.hpp \
+		../include/cache.hpp \
+		../include/PipeLine.hpp \
+		../include/Decode.h \
+		../include/Stage.h \
+		../include/Execute.h \
+		../include/Register.h \
+		../include/Fetch.h \
+		../include/MemoryAccess.h \
+		../include/WriteBack.h \
 		../../../../Applications/Qt/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../../Applications/Qt/5.14.2/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		../../../../Applications/Qt/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QApplication \
@@ -830,11 +933,19 @@ main.o: ../src/main.cpp ../include/mainwindow.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../src/main.cpp
 
 mainwindow.o: ../src/mainwindow.cpp ../include/mainwindow.h \
+		../include/simulator.hpp \
+		../include/cache.hpp \
+		../include/PipeLine.hpp \
+		../include/Decode.h \
+		../include/Stage.h \
+		../include/Execute.h \
+		../include/Register.h \
+		../include/Fetch.h \
+		../include/MemoryAccess.h \
+		../include/WriteBack.h \
 		../../../../Applications/Qt/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../../Applications/Qt/5.14.2/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
-		ui_mainwindow.h \
-		../include/simulator.hpp \
-		../include/cache.hpp
+		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../src/mainwindow.cpp
 
 simulator.o: ../src/simulator.cpp ../include/simulator.hpp \

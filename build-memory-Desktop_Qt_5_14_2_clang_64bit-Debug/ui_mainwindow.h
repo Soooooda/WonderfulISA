@@ -16,6 +16,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTableWidget>
@@ -33,7 +34,7 @@ public:
     QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout;
     QTableWidget *cacheTable;
-    QPushButton *pushButton;
+    QPushButton *next;
     QLabel *cache_label;
     QCheckBox *checkBox;
     QLabel *label_2;
@@ -50,6 +51,11 @@ public:
     QTextEdit *inputValue;
     QPushButton *pushButton_2;
     QPushButton *pushButton_3;
+    QPlainTextEdit *InstructionInput;
+    QPushButton *instructionReadButton;
+    QTableWidget *pipelineTable;
+    QTableWidget *registerTable;
+    QLabel *registerLabel;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -71,10 +77,10 @@ public:
 
         verticalLayout->addWidget(cacheTable);
 
-        pushButton = new QPushButton(centralwidget);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(610, 690, 113, 32));
-        pushButton->setAutoFillBackground(true);
+        next = new QPushButton(centralwidget);
+        next->setObjectName(QString::fromUtf8("next"));
+        next->setGeometry(QRect(490, 630, 113, 32));
+        next->setAutoFillBackground(true);
         cache_label = new QLabel(centralwidget);
         cache_label->setObjectName(QString::fromUtf8("cache_label"));
         cache_label->setGeometry(QRect(100, 100, 91, 16));
@@ -101,10 +107,10 @@ public:
         textBrowser_4->setGeometry(QRect(530, 70, 111, 21));
         memory_label = new QLabel(centralwidget);
         memory_label->setObjectName(QString::fromUtf8("memory_label"));
-        memory_label->setGeometry(QRect(620, 100, 91, 20));
+        memory_label->setGeometry(QRect(740, 100, 91, 20));
         memoryTable = new QTableWidget(centralwidget);
         memoryTable->setObjectName(QString::fromUtf8("memoryTable"));
-        memoryTable->setGeometry(QRect(620, 120, 151, 351));
+        memoryTable->setGeometry(QRect(730, 120, 151, 561));
         inputMemory = new QTextEdit(centralwidget);
         inputMemory->setObjectName(QString::fromUtf8("inputMemory"));
         inputMemory->setGeometry(QRect(150, 660, 104, 21));
@@ -123,6 +129,21 @@ public:
         pushButton_3 = new QPushButton(centralwidget);
         pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
         pushButton_3->setGeometry(QRect(250, 680, 113, 32));
+        InstructionInput = new QPlainTextEdit(centralwidget);
+        InstructionInput->setObjectName(QString::fromUtf8("InstructionInput"));
+        InstructionInput->setGeometry(QRect(100, 480, 231, 151));
+        instructionReadButton = new QPushButton(centralwidget);
+        instructionReadButton->setObjectName(QString::fromUtf8("instructionReadButton"));
+        instructionReadButton->setGeometry(QRect(210, 630, 131, 32));
+        pipelineTable = new QTableWidget(centralwidget);
+        pipelineTable->setObjectName(QString::fromUtf8("pipelineTable"));
+        pipelineTable->setGeometry(QRect(340, 480, 256, 151));
+        registerTable = new QTableWidget(centralwidget);
+        registerTable->setObjectName(QString::fromUtf8("registerTable"));
+        registerTable->setGeometry(QRect(610, 120, 111, 561));
+        registerLabel = new QLabel(centralwidget);
+        registerLabel->setObjectName(QString::fromUtf8("registerLabel"));
+        registerLabel->setGeometry(QRect(610, 100, 59, 16));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -140,7 +161,7 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        pushButton->setText(QCoreApplication::translate("MainWindow", "NextOrder", nullptr));
+        next->setText(QCoreApplication::translate("MainWindow", "Next", nullptr));
         cache_label->setText(QCoreApplication::translate("MainWindow", "cache view", nullptr));
         checkBox->setText(QCoreApplication::translate("MainWindow", "L2 cache", nullptr));
         label_2->setText(QCoreApplication::translate("MainWindow", "time cycle", nullptr));
@@ -151,6 +172,8 @@ public:
         inputValueLabel->setText(QCoreApplication::translate("MainWindow", "Value", nullptr));
         pushButton_2->setText(QCoreApplication::translate("MainWindow", "read", nullptr));
         pushButton_3->setText(QCoreApplication::translate("MainWindow", "write", nullptr));
+        instructionReadButton->setText(QCoreApplication::translate("MainWindow", "Read Instructions", nullptr));
+        registerLabel->setText(QCoreApplication::translate("MainWindow", "Register", nullptr));
     } // retranslateUi
 
 };

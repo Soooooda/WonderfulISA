@@ -1,7 +1,7 @@
 #ifndef SIMULATOR_HPP
 #define SIMULATOR_HPP
 
-#endif // SIMULATOR_HPP
+
 #include "../include/cache.hpp"
 #define BLOCK_OFFSET ((1<<16)-4)
 #define ADDRESS_OFFSET 3
@@ -17,3 +17,4 @@ class Simulator
         int16_t read_memory(int16_t address);
         void instantiate();
 };
+#endif // SIMULATOR_HPP

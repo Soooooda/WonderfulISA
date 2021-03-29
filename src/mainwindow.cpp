@@ -8,7 +8,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     //cache
-    //cache consists of 16 cachelines
     ui->cacheTable->setRowCount(16);
     ui->cacheTable->setColumnCount(7);
     ui->cacheTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -19,18 +18,39 @@ MainWindow::MainWindow(QWidget *parent)
     ui->cacheTable->setHorizontalHeaderLabels(cache_header);
 
     //memory
-    //memory = (int16_t*) malloc(sizeof(int16_t) *1024*64); //memory is 2^16 * word(16bit)
     ui->memoryTable->setRowCount(10000);
     ui->memoryTable->setColumnCount(2);
     ui->memoryTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->memoryTable->resizeRowsToContents();
     ui->memoryTable->setWindowTitle("Memory View");
     QStringList memory_header;
     memory_header<<"address"<<"value";
     ui->memoryTable->setHorizontalHeaderLabels(memory_header);
 
+    //pipeline
+    ui->pipelineTable->setRowCount(5);
+    ui->pipelineTable->setColumnCount(2);
+    ui->pipelineTable->setItem(0,0,new QTableWidgetItem("fetch"));
+    ui->pipelineTable->setItem(1,0,new QTableWidgetItem("decode"));
+    ui->pipelineTable->setItem(2,0,new QTableWidgetItem("alu"));
+    ui->pipelineTable->setItem(3,0,new QTableWidgetItem("memory"));
+    ui->pipelineTable->setItem(4,0,new QTableWidgetItem("write_back"));
+    ui->pipelineTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->pipelineTable->resizeRowsToContents();
+    QStringList pipline_header;
+    pipline_header<<"stage"<<"Instruction";
+    ui->pipelineTable->setHorizontalHeaderLabels(pipline_header);
 
-    simulator.instantiate();
+    //registers
+    ui->registerTable->setRowCount(16);
+    ui->registerTable->setColumnCount(1);
+    ui->registerTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->registerTable->resizeRowsToContents();
+    QStringList register_header;
+    register_header<<"value";
+    ui->registerTable->setHorizontalHeaderLabels(register_header);
 
+    pipeline.simulator.instantiate();
     refresh_cache();
     refresh_memory();
 
@@ -44,7 +64,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::refresh_cache()
 {
-    CacheLine* cache = simulator.l1_cache.cache;
+    CacheLine* cache = pipeline.simulator.l1_cache.cache;
 
     for(int16_t ptr = 0; ptr<16;ptr+=1)
     {
@@ -62,7 +82,7 @@ void MainWindow::refresh_cache()
 
 void MainWindow::refresh_memory()
 {
-    int16_t* memory = simulator.memory;
+    int16_t* memory = pipeline.simulator.memory;
 //    CacheLine* cache = simulator.l1_cache.cache;
 
     for(int16_t ptr = 0; ptr<10000;ptr+=1)
@@ -73,12 +93,21 @@ void MainWindow::refresh_memory()
     ui->memoryTable->show();
 }
 
+void MainWindow::refresh_register()
+{
+    for(int16_t ptr = 0; ptr<16;ptr+=1)
+    {
+        ui->registerTable->setItem(ptr,0,new QTableWidgetItem(QString::fromStdString(to_string(pipeline.registe.get(ptr)))));
+    }
+    ui->memoryTable->show();
+}
+
 
 //get value from memory
 void MainWindow::on_pushButton_2_clicked()
 {
     int16_t address = ui->inputMemory->toPlainText().toInt();
-    int16_t value = simulator.read_memory(address);
+    int16_t value = pipeline.simulator.read_memory(address);
     refresh_cache();
     refresh_memory();
     //set read value
@@ -90,7 +119,28 @@ void MainWindow::on_pushButton_3_clicked()
 {
         int16_t value = ui->inputValue->toPlainText().toInt();
         int16_t address = ui->inputMemory->toPlainText().toInt();
-        simulator.write_memory(address,value);
+        pipeline.simulator.write_memory(address,value);
         refresh_cache();
         refresh_memory();
+}
+
+
+void MainWindow::on_instructionReadButton_clicked()
+{
+
+    QStringList Lines = ui->InstructionInput->toPlainText().split('\n');
+
+    string* instructions = new string[Lines.size()];
+    for (int i = 0; i < Lines.size(); i++) {
+        instructions[i] = Lines[i].toStdString();
+        //pipeline.readInstruction(instructions[i]);
+    }
+    pipeline.read_instructions(instructions);
+
+}
+
+void MainWindow::on_next_clicked()
+{
+    pipeline.run_cycle();
+    refresh_register();
 }

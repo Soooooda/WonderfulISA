@@ -1,5 +1,8 @@
+#ifndef CACHE_HPP
+#define CACHE_HPP
 #include <iostream>
 #include <cstring>
+
 using namespace std;
 #define TAG_INDEX_FLAG ((1<<16)-4)
 #define TAG_INDEX_OFFSET 2
@@ -53,3 +56,4 @@ class Cache
 
         Cache *next_level;
 };
+#endif

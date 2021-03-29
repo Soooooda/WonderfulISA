@@ -1,6 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#include "../include/simulator.hpp"
+#include "../include/PipeLine.hpp"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -13,7 +13,7 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
-    Simulator simulator;
+    PipeLine pipeline;
     ~MainWindow();
 
 private slots:
@@ -24,6 +24,12 @@ private slots:
     void refresh_cache();
 
     void refresh_memory();
+
+    void refresh_register();
+
+    void on_instructionReadButton_clicked();
+
+    void on_next_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -25,9 +25,9 @@ class PipeLine
         MemoryAccess memoryaccess;
         WriteBack writeback;
         Register registe;
-//        output *wb_output;
-//        output *alu_result;
-//        output *decode_result;
+        output *wb_output;
+        output *alu_result;
+        output *decode_result;
 
 
 };

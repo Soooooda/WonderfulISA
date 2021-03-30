@@ -7,6 +7,9 @@
 PipeLine::PipeLine()
 {
     pc =  0;
+    wb_output = (struct output *)malloc(sizeof(output));
+    alu_result = (struct output *)malloc(sizeof(output));
+    decode_result = (struct output *)malloc(sizeof(output));
 }
 
 
@@ -28,51 +31,52 @@ void PipeLine::initialize(string* s)
 
 void PipeLine::run_cycle()
 {
-    cout<<"==1=="<<pc<<short(instructions->size())<<endl;
-//    if()
-//    {
 
 
-        cout<<"==2=="<<endl;
-        // writeback oper
-        output *wb_output = memoryaccess.execute(&simulator);
-        if(wb_output!=NULL)
-        {
-            writeback.wb_queue.push(wb_output);
-        }
 
-        // excute oper
-        output* alu_result = execute.execute(registe);
-        if(alu_result)
-        {
-            memoryaccess.mem_queue.push(alu_result);
-        }
 
-        //decode oper
-        output* decode_result = decode.execute();
+    // writeback oper
 
-        if(decode_result)
-        {
-            execute.execute_queue.push(decode_result);
-        }
+    cout<<"==memory access=="<<pc<<short(instructions->size())<<endl;
+    wb_output = memoryaccess.execute(&simulator);
+    if(wb_output!=NULL)
+    {
+        writeback.wb_queue.push(wb_output);
+    }
 
-        // fetch oper
-        string fetch_result = fetch.execute(instructions);
-        if(fetch_result!="")
-        {
-            decode.decode_queue.push(fetch_result);
-        }
-        if(pc < short(instructions->size()))
-        {
-            fetch.fetch_queue.push(pc);
-            pc+=1;
-        }
+    cout<<"==alu execute=="<<endl;
+    // excute oper
+    alu_result = execute.execute(registe);
+    if(alu_result)
+    {
+        memoryaccess.mem_queue.push(alu_result);
+    }
 
-        cout<<"==3=="<<endl;
+    cout<<"==decode=="<<endl;
+    //decode oper
+    decode_result = decode.execute();
 
-        cout<<"==4=="<<endl;
+    if(decode_result)
+    {
+        execute.execute_queue.push(decode_result);
+    }
 
-//    }
+    cout<<"==fetch=="<<endl;
+    // fetch oper
+    string fetch_result = fetch.execute(instructions);
+    if(fetch_result!="")
+    {
+        decode.decode_queue.push(fetch_result);
+    }
+
+    if(pc < short(instructions->size()))
+    {
+        fetch.fetch_queue.push(pc);
+        pc+=1;
+    }
+
+    cout<<"==finish==\n\n"<<endl;
+
 }
 
 //fetch from pc

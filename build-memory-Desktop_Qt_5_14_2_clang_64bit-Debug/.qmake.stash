@@ -41,3 +41,4 @@ QMAKE_CXX.LIBDIRS = /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr
 QMAKE_MAC_SDK.macosx.SDKVersion = 10.14.6
 QMAKE_MAC_SDK.macosx.Path = /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk
 QMAKE_XCODE_DEVELOPER_PATH = /Library/Developer/CommandLineTools
+QMAKE_LICHECK_TIMESTAMP = "Wed Mar 31"

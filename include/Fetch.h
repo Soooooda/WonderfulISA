@@ -5,7 +5,7 @@ class Fetch: public Stage
 {
     public:
         Fetch();
-        string execute(string* instructions);
+        string execute(string *instructions);
         queue<int16_t> fetch_queue;
 
 };

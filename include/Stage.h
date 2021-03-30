@@ -6,7 +6,7 @@
 //template<class T>
 struct instruction
 {
-    string_view instruction_operator;
+    int16_t instruction_operator;
     int16_t operands[3];
     int16_t address;
     int16_t cmp;
@@ -14,6 +14,7 @@ struct instruction
 
 struct output
 {
+    bool    changed;
     int16_t register_id;
     int16_t address;
     int16_t value;

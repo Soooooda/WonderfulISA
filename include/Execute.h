@@ -6,7 +6,7 @@ class Execute: public Stage
 {
     public:
         Execute();
-        output * execute(Register registe);
+        output *execute(Register* registe);
         queue<output *> execute_queue;
 
 };

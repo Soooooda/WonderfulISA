@@ -135,12 +135,13 @@ void MainWindow::on_instructionReadButton_clicked()
         instructions[i] = Lines[i].toStdString();
         //pipeline.readInstruction(instructions[i]);
     }
-    pipeline.read_instructions(instructions);
-
+    pipeline.initialize(instructions, Lines.size());
 }
 
 void MainWindow::on_next_clicked()
 {
     pipeline.run_cycle();
     refresh_register();
+    refresh_memory();
+    refresh_cache();
 }

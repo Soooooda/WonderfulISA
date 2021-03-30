@@ -7,15 +7,6 @@
 PipeLine::PipeLine()
 {
     pc =  0;
-    wb_output = (struct output *)malloc(sizeof(output));
-    alu_result = (struct output *)malloc(sizeof(output));
-    decode_result = (struct output *)malloc(sizeof(output));
-}
-
-
-void PipeLine::readInstruction(string s)
-{
-    cout<<s<<endl;
 }
 
 void PipeLine::read_instructions(string *s)
@@ -23,54 +14,59 @@ void PipeLine::read_instructions(string *s)
     instructions = s;
 }
 
-void PipeLine::initialize(string* s)
+void PipeLine::initialize(string* s, int16_t size)
 {
     read_instructions(s);
     fetch.fetch_queue.push(pc);
+    this->instruction_count = size;
 }
 
 void PipeLine::run_cycle()
-{
+{    
+    cout<<"==write back=="<<endl;
 
-
-
-
-    // writeback oper
-
-    cout<<"==memory access=="<<pc<<short(instructions->size())<<endl;
-    wb_output = memoryaccess.execute(&simulator);
-    if(wb_output!=NULL)
+    cout<<"==memory access=="<<endl;
+    output *wb_result = memoryaccess.execute(&simulator, &registe);
+    if(wb_result)
     {
-        writeback.wb_queue.push(wb_output);
+        memoryaccess.mem_queue.pop();
+        writeback.wb_queue.push(wb_result);
+
+    }
+    if(memoryaccess.time>0){
+        return;
     }
 
     cout<<"==alu execute=="<<endl;
-    // excute oper
-    alu_result = execute.execute(registe);
+    output *alu_result = execute.execute(&registe);
     if(alu_result)
     {
+        execute.execute_queue.pop();
         memoryaccess.mem_queue.push(alu_result);
+
     }
 
     cout<<"==decode=="<<endl;
-    //decode oper
-    decode_result = decode.execute();
-
-    if(decode_result)
+    struct output *result = decode.execute();
+    cout<<"decode address:"<<result<<endl;
+    if(result)
     {
-        execute.execute_queue.push(decode_result);
+        execute.execute_queue.push(result);
     }
 
     cout<<"==fetch=="<<endl;
-    // fetch oper
     string fetch_result = fetch.execute(instructions);
     if(fetch_result!="")
     {
         decode.decode_queue.push(fetch_result);
     }
 
-    if(pc < short(instructions->size()))
+
+    if(pc < instruction_count)
     {
+//        if(pc >= short(instructions->size())){
+//            return;
+//        }
         fetch.fetch_queue.push(pc);
         pc+=1;
     }

@@ -13,22 +13,17 @@ class PipeLine
     public:
         PipeLine();
         Simulator simulator;
-        void readInstruction(string s);
         int16_t pc;
         string* instructions;
         void read_instructions(string* s);
         void run_cycle();
-        void initialize(string* s);
+        void initialize(string* s, int16_t size);
         Fetch fetch;
         Decode decode;
         Execute execute;
         MemoryAccess memoryaccess;
         WriteBack writeback;
         Register registe;
-        output *wb_output;
-        output *alu_result;
-        output *decode_result;
-
-
+        int16_t instruction_count;
 };
 #endif

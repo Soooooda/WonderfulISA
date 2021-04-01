@@ -7,6 +7,10 @@
 PipeLine::PipeLine()
 {
     pc =  0;
+    for(int16_t i = 0; i<5; i++)
+    {
+        pipeLine_pc[i] = 0;
+    }
 }
 
 void PipeLine::read_instructions(string *s)
@@ -17,12 +21,15 @@ void PipeLine::read_instructions(string *s)
 void PipeLine::initialize(string* s, int16_t size)
 {
     read_instructions(s);
-    fetch.fetch_queue.push(pc);
+//    fetch.fetch_queue.push(pc);
     this->instruction_count = size;
 }
 
 void PipeLine::run_cycle()
 {    
+
+
+
     cout<<"==write back=="<<endl;
 
     cout<<"==memory access=="<<endl;
@@ -35,6 +42,10 @@ void PipeLine::run_cycle()
     }
     if(memoryaccess.time>0){
         return;
+    }
+    else
+    {
+        record_pipeline();
     }
 
     cout<<"==alu execute=="<<endl;
@@ -61,17 +72,48 @@ void PipeLine::run_cycle()
         decode.decode_queue.push(fetch_result);
     }
 
-
     if(pc < instruction_count)
     {
-//        if(pc >= short(instructions->size())){
-//            return;
-//        }
         fetch.fetch_queue.push(pc);
         pc+=1;
     }
-
     cout<<"==finish==\n\n"<<endl;
+
+    record_pipeline();
+
+}
+
+
+string PipeLine::getLastElement (const std::string& str)
+{
+  cout << "Splitting: " << str << '\n';
+  size_t found = str.find_last_of(" ");
+  cout << " file: " << str.substr(found+1) << '\n';
+  return str.substr(found+1);
+}
+
+void PipeLine::record_pipeline()
+{
+    if(fetch.fetch_queue.empty())
+        pipeLine_pc[0] = -1;
+    else
+        pipeLine_pc[0] = fetch.fetch_queue.front();
+    if(decode.decode_queue.empty())
+        pipeLine_pc[1] = -1;
+    else
+        pipeLine_pc[1] = stoi(getLastElement(decode.decode_queue.front()));
+    if(execute.execute_queue.empty())
+        pipeLine_pc[2] = -1;
+    else
+        pipeLine_pc[2] = execute.execute_queue.front()->pc;
+    if(memoryaccess.mem_queue.empty())
+        pipeLine_pc[3] = -1;
+    else
+        pipeLine_pc[3] = memoryaccess.mem_queue.front()->pc;
+    if(writeback.wb_queue.empty())
+        pipeLine_pc[4] = -1;
+    else
+        pipeLine_pc[4] = writeback.wb_queue.front()->pc;
 
 }
 

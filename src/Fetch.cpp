@@ -2,7 +2,7 @@
 
 Fetch::Fetch()
 {
-
+    clear(fetch_queue);
 }
 
 string Fetch::execute(string *instruction)
@@ -16,5 +16,5 @@ string Fetch::execute(string *instruction)
     cout<<"pc:"<<pc<<endl;
     fetch_queue.pop();
 
-    return instruction[pc];
+    return instruction[pc]+" "+to_string(pc);
 }

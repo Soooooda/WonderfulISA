@@ -12,7 +12,6 @@ Simulator::Simulator()
 
 void Simulator::instantiate()
 {
-    // l1_cache = Cache(16,16*23,1,NULL);
     //memory大小为2^16*int16
     memory = (int16_t*) malloc(sizeof(int16_t) *1024*64);
     memset(memory, 0, sizeof(int16_t) *1024*64);
@@ -25,8 +24,6 @@ void Simulator::instantiate()
 
 string Simulator::write_memory(int16_t address, int16_t value)
 {
-    // *(memory+address) = value;
-    // printf("memory address written: %p, value: %d\n", address, *(memory+address));
     int16_t cache_line = l1_cache.request_cache(address);
 
     //cache miss
@@ -73,8 +70,6 @@ string Simulator::write_memory(int16_t address, int16_t value)
 
 int16_t Simulator::read_memory(int16_t address)
 {
-    // printf("memory address read: %p, value: %d\n", address, *(memory+address));
-    // l1_cache.read(address);
     int16_t cache_line = l1_cache.request_cache(address);
     if(cache_line==-1)
     {

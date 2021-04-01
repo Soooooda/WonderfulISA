@@ -50,9 +50,13 @@ MainWindow::MainWindow(QWidget *parent)
     register_header<<"value";
     ui->registerTable->setHorizontalHeaderLabels(register_header);
 
+    //has instruction clicked before next cycle button?
+    instruction_clicked = false;
+
     pipeline.simulator.instantiate();
     refresh_cache();
     refresh_memory();
+    refresh_pipeline();
 
 
 }
@@ -99,9 +103,17 @@ void MainWindow::refresh_register()
     {
         ui->registerTable->setItem(ptr,0,new QTableWidgetItem(QString::fromStdString(to_string(pipeline.registe.get(ptr)))));
     }
-    ui->memoryTable->show();
+    ui->registerTable->show();
 }
 
+void MainWindow::refresh_pipeline()
+{
+    for(int16_t ptr = 0; ptr<5;ptr+=1)
+    {
+        ui->pipelineTable->setItem(ptr,1,new QTableWidgetItem(QString::fromStdString(to_string(pipeline.pipeLine_pc[ptr]))));
+    }
+    ui->pipelineTable->show();
+}
 
 //get value from memory
 void MainWindow::on_pushButton_2_clicked()
@@ -136,12 +148,17 @@ void MainWindow::on_instructionReadButton_clicked()
         //pipeline.readInstruction(instructions[i]);
     }
     pipeline.initialize(instructions, Lines.size());
+    instruction_clicked = true;
 }
 
 void MainWindow::on_next_clicked()
 {
-    pipeline.run_cycle();
-    refresh_register();
-    refresh_memory();
-    refresh_cache();
+    if(instruction_clicked)
+    {
+        pipeline.run_cycle();
+        refresh_register();
+        refresh_memory();
+        refresh_cache();
+        refresh_pipeline();
+    }
 }

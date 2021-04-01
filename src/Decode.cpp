@@ -49,6 +49,7 @@ output* Decode::execute()
     result->inst.operands[2] = stoi(tokens[3]);
     result->inst.address = stoi(tokens[4]);
     result->inst.cmp = stoi(tokens[5]);
+    result->pc = stoi(tokens[6]);
     decode_queue.pop();
     return result;
 }

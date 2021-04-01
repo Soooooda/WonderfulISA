@@ -15,6 +15,7 @@ output *Execute::execute(Register* registe)
 
     output *data = (struct output *)execute_queue.front();
     cout<<"alu opt:"<<data->inst.instruction_operator<<endl;
+
     if (data->inst.instruction_operator == 3) {
         data->value = registe->get(data->inst.operands[1]) + registe->get(data->inst.operands[2]);
         data->register_id = data->inst.operands[0];

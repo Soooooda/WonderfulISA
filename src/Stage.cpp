@@ -6,3 +6,10 @@ Stage::Stage()
 {
 
 }
+
+void Stage::clear( std::queue<int16_t> &q )
+{
+   std::queue<int16_t> empty;
+   std::swap( q, empty );
+}
+

@@ -14,6 +14,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     PipeLine pipeline;
+    bool instruction_clicked;
     ~MainWindow();
 
 private slots:
@@ -26,6 +27,8 @@ private slots:
     void refresh_memory();
 
     void refresh_register();
+
+    void refresh_pipeline();
 
     void on_instructionReadButton_clicked();
 

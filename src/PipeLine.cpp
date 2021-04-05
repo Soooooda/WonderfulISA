@@ -13,14 +13,23 @@ PipeLine::PipeLine()
     }
 }
 
-void PipeLine::read_instructions(string *s)
+void PipeLine::read_instructions(string *s, int16_t size)
 {
     instructions = s;
+    int16_t base = 100;
+    for(int16_t i = 0; i < size; i++)
+    {
+        int32_t ins = stoi(instructions[i]);
+        int16_t part1 =(ins >>8);
+        int16_t part2 = ins&0x0000ffff;
+        simulator.write_memory(base+i,part1);
+        simulator.write_memory(base +i +1,part2);
+    }
 }
 
 void PipeLine::initialize(string* s, int16_t size)
 {
-    read_instructions(s);
+    read_instructions(s,size);
 //    fetch.fetch_queue.push(pc);
     this->instruction_count = size;
 }
@@ -66,7 +75,7 @@ void PipeLine::run_cycle()
     }
 
     cout<<"==fetch=="<<endl;
-    string fetch_result = fetch.execute(instructions);
+    string fetch_result = fetch.execute(instructions,&simulator);
     if(fetch_result!="")
     {
         decode.decode_queue.push(fetch_result);

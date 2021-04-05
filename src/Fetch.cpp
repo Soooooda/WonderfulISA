@@ -5,7 +5,7 @@ Fetch::Fetch()
     clear(fetch_queue);
 }
 
-string Fetch::execute(string *instruction)
+string Fetch::execute(string *instruction, Simulator *simulator)
 {
     if(fetch_queue.empty())
     {

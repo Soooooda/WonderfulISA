@@ -1,6 +1,6 @@
 #ifndef PIPELINE_HPP
 #define PIPELINE_HPP
-
+#define BASE 100 //pc 相对寻址起始点
 #include "Decode.h"
 #include "Execute.h"
 #include "Fetch.h"
@@ -15,7 +15,7 @@ class PipeLine
         Simulator simulator;
         int16_t pc;
         string* instructions;
-        void read_instructions(string* s);
+        void read_instructions(string* s, int16_t size);
         void run_cycle();
         void initialize(string* s, int16_t size);
         Fetch fetch;

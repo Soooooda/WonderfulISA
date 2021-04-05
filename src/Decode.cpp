@@ -52,6 +52,10 @@ output* Decode::execute()
             result->inst.address = addr;
             cout<<"The command is STOREI "<<Rd<<" "<<addr<<" "<<endl;
             break;
+        case 21://JUMP
+            result->inst.instruction_operator = 5;
+            result->inst.operands[0] = Rd;
+            result->inst.address = addr;
         default:
             result->inst.instruction_operator = -1;
             result->inst.operands[0] = -1;

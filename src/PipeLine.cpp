@@ -61,6 +61,21 @@ void PipeLine::run_cycle()
 
     cout<<"==alu execute=="<<endl;
     output *alu_result = execute.execute(&registe);
+    if(alu_result->inst.instruction_operator == 21)
+    {
+        execute.execute_queue.pop();
+        memoryaccess.mem_queue.push(alu_result);
+        while(!execute.execute_queue.empty()){
+            execute.execute_queue.pop();
+        }
+        while(!decode.decode_queue.empty()){
+            decode.decode_queue.pop();
+        }
+        while(!fetch.fetch_queue.empty()){
+            fetch.fetch_queue.pop();
+        }
+        pc = alu_result->inst.address;
+    }
     if(alu_result)
     {
         execute.execute_queue.pop();
@@ -83,7 +98,7 @@ void PipeLine::run_cycle()
         decode.decode_queue.push(fetch_result);
     }
 
-    if(pc < instruction_count)
+    if(pc < instruction_count)//可以给个100试试看
     {
         fetch.fetch_queue.push(pc);
         pc+=1;

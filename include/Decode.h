@@ -6,7 +6,7 @@ class Decode: public Stage
     public:
         Decode();
         output *execute();
-        queue<string> decode_queue;
+        queue<int32_t> decode_queue;
 
 };
 #endif // DECODE_H

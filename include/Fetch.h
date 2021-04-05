@@ -5,7 +5,7 @@ class Fetch: public Stage
 {
     public:
         Fetch();
-        string execute(string *instructions, Simulator *simulator);
+        int32_t execute(string *instructions, Simulator *simulator);
         queue<int16_t> fetch_queue;
 
 };

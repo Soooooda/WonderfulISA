@@ -77,8 +77,8 @@ void PipeLine::run_cycle()
     }
 
     cout<<"==fetch=="<<endl;
-    string fetch_result = fetch.execute(instructions,&simulator);
-    if(fetch_result!="")
+    int32_t fetch_result = fetch.execute(instructions,&simulator);
+    if(fetch_result!=-1)
     {
         decode.decode_queue.push(fetch_result);
     }
@@ -112,7 +112,8 @@ void PipeLine::record_pipeline()
     if(decode.decode_queue.empty())
         pipeLine_pc[1] = -1;
     else
-        pipeLine_pc[1] = stoi(getLastElement(decode.decode_queue.front()));
+    //我将decode的queue改成了int我不知道会对后面造成什么影响
+        pipeLine_pc[1] = stoi(getLastElement(to_string(decode.decode_queue.front())));
     if(execute.execute_queue.empty())
         pipeLine_pc[2] = -1;
     else

@@ -67,6 +67,8 @@ void PipeLine::run_cycle()
     output *alu_result = execute.execute(&registe);
     if(alu_result)
     {
+        execute.execute_queue.pop();
+        memoryaccess.mem_queue.push(alu_result);
         if(alu_result->inst.instruction_operator == 21)
         {
             cout<<"Now Jump！";
@@ -81,8 +83,7 @@ void PipeLine::run_cycle()
             }
             pc = alu_result->inst.address;
         }
-        execute.execute_queue.pop();
-        memoryaccess.mem_queue.push(alu_result);
+        cout<<"opcode:"<<alu_result->inst.instruction_operator<<endl;
 
     }
 
@@ -101,7 +102,7 @@ void PipeLine::run_cycle()
         decode.decode_queue.push(fetch_result);
     }
 
-    if(pc < instruction_count)//可以给个100试试看
+    if(pc != -1)//可以给个1000000000试试看
     {
         fetch.fetch_queue.push(pc);
         pc+=1;

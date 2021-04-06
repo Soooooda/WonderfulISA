@@ -13,6 +13,7 @@
         "*.tcc": "cpp",
         "compare": "cpp",
         "iosfwd": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "queue": "cpp"
     }
 }

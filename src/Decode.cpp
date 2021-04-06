@@ -31,31 +31,33 @@ output* Decode::execute()
             result->inst.operands[0] = Rd;
             result->inst.operands[1] = Rm;
             result->inst.operands[2] = Rn;
-            cout<<"The command is ADD "<<Rd<<" "<<Rm<<" "<<Rn<<endl;
+            cout<<"The command is ADD R"<<Rd<<" R"<<Rm<<" R"<<Rn<<endl;
             break;
         case 4:  //SUB
             result->inst.instruction_operator = 4;
             result->inst.operands[0] = Rd;
             result->inst.operands[1] = Rm;
             result->inst.operands[2] = Rn;
-            cout<<"The command is SUB "<<Rd<<" "<<Rm<<" "<<Rn<<endl;
+            cout<<"The command is SUB R"<<Rd<<" R"<<Rm<<" R"<<Rn<<endl;
             break;
         case 11: //LOAD
             result->inst.instruction_operator = 1;
             result->inst.operands[0] = Rd;
             result->inst.address = addr;
-            cout<<"The command is STOREI "<<Rd<<" "<<addr<<" "<<endl;
+            cout<<"The command is LOADI R"<<Rd<<" "<<addr<<" "<<endl;
             break;
         case 14: //STORE
             result->inst.instruction_operator = 2;
             result->inst.operands[0] = Rd;
             result->inst.address = addr;
-            cout<<"The command is STOREI "<<Rd<<" "<<addr<<" "<<endl;
+            cout<<"The command is STOREI R"<<Rd<<" "<<addr<<" "<<endl;
             break;
         case 21://JUMP
-            result->inst.instruction_operator = 5;
+            result->inst.instruction_operator = 21;
             result->inst.operands[0] = Rd;
             result->inst.address = addr;
+            cout<<"The command is JUMP R"<<Rd<<" "<<addr<<" "<<endl;
+            break;
         default:
             result->inst.instruction_operator = -1;
             result->inst.operands[0] = -1;

@@ -22,8 +22,13 @@ void PipeLine::read_instructions(string *s, int16_t size)
         for(int j = 0; j < 32; j++){
             ins = ins*2 + stoi(instructions[i].substr(j,1));
         }
+        int32_t temp_part1 =ins >>16;
+        cout<<"part1"<<temp_part1<<endl;
+        int16_t part1 = temp_part1;
+        cout<<"part1"<<part1<<endl;
+        cout<<"ins"<<ins<<endl;
         int16_t part2 = ins&0x0000ffff;
-        int16_t part1 =(ins >>8);
+        cout<<"part2"<<part2<<endl;
         simulator.write_memory(base+i,part1);
         simulator.write_memory(base +i +1,part2);
     }
@@ -61,23 +66,23 @@ void PipeLine::run_cycle()
 
     cout<<"==alu execute=="<<endl;
     output *alu_result = execute.execute(&registe);
-    if(alu_result->inst.instruction_operator == 21)
-    {
-        execute.execute_queue.pop();
-        memoryaccess.mem_queue.push(alu_result);
-        while(!execute.execute_queue.empty()){
-            execute.execute_queue.pop();
-        }
-        while(!decode.decode_queue.empty()){
-            decode.decode_queue.pop();
-        }
-        while(!fetch.fetch_queue.empty()){
-            fetch.fetch_queue.pop();
-        }
-        pc = alu_result->inst.address;
-    }
     if(alu_result)
     {
+        if(alu_result->inst.instruction_operator == 21)
+        {
+            cout<<"Now Jump！";
+            while(!execute.execute_queue.empty()){
+                execute.execute_queue.pop();
+            }
+            while(!decode.decode_queue.empty()){
+                decode.decode_queue.pop();
+            }
+            while(!fetch.fetch_queue.empty()){
+                fetch.fetch_queue.pop();
+            }
+            pc = alu_result->inst.address;
+        }
+        cout<<"NO";
         execute.execute_queue.pop();
         memoryaccess.mem_queue.push(alu_result);
 

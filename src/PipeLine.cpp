@@ -23,14 +23,13 @@ void PipeLine::read_instructions(string *s, int16_t size)
             ins = ins*2 + stoi(instructions[i].substr(j,1));
         }
         int32_t temp_part1 =ins >>16;
-        cout<<"part1"<<temp_part1<<endl;
         int16_t part1 = temp_part1;
-        cout<<"part1"<<part1<<endl;
+        cout<<"part1: "<<part1<<endl;
         cout<<"ins"<<ins<<endl;
         int16_t part2 = ins&0x0000ffff;
-        cout<<"part2"<<part2<<endl;
-        simulator.write_memory(base+i,part1);
-        simulator.write_memory(base +i +1,part2);
+        cout<<"part2: "<<part2<<endl;
+        simulator.write_memory(base+i*2,part1);
+        simulator.write_memory(base +i*2 +1,part2);
     }
 }
 
@@ -82,7 +81,6 @@ void PipeLine::run_cycle()
             }
             pc = alu_result->inst.address;
         }
-        cout<<"NO";
         execute.execute_queue.pop();
         memoryaccess.mem_queue.push(alu_result);
 

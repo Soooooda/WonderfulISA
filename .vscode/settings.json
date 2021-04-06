@@ -12,6 +12,7 @@
         "utility": "cpp",
         "*.tcc": "cpp",
         "compare": "cpp",
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "string": "cpp"
     }
 }

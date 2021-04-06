@@ -141,7 +141,7 @@ void MainWindow::on_instructionReadButton_clicked()
 {
 
     QStringList Lines = ui->InstructionInput->toPlainText().split('\n');
-
+    cout<<"SIze: "<< Lines.size()<<endl;
     string* instructions = new string[Lines.size()];
     for (int i = 0; i < Lines.size(); i++) {
         instructions[i] = Lines[i].toStdString();

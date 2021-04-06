@@ -110,7 +110,7 @@ void MainWindow::refresh_pipeline()
 {
     for(int16_t ptr = 0; ptr<5;ptr+=1)
     {
-        ui->pipelineTable->setItem(ptr,1,new QTableWidgetItem(QString::fromStdString(to_string(pipeline.pipeLine_pc[ptr]))));
+        ui->pipelineTable->setItem(ptr,1,new QTableWidgetItem(QString::fromStdString(pipeline.pipeLine_pc[ptr])));
     }
     ui->pipelineTable->show();
 }

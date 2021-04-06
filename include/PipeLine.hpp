@@ -25,7 +25,7 @@ class PipeLine
         WriteBack writeback;
         Register registe;
         int16_t instruction_count;
-        int16_t pipeLine_pc[5];
+        string pipeLine_pc[5];
         string getLastElement (const std::string& str);
         void record_pipeline();
 };

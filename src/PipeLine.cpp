@@ -9,7 +9,7 @@ PipeLine::PipeLine()
     pc =  0;
     for(int16_t i = 0; i<5; i++)
     {
-        pipeLine_pc[i] = 0;
+        pipeLine_pc[i] = "0";
     }
 }
 
@@ -124,28 +124,32 @@ string PipeLine::getLastElement (const std::string& str)
 
 void PipeLine::record_pipeline()
 {
+    string temp = "";
     if(fetch.fetch_queue.empty())
-        pipeLine_pc[0] = -1;
+        pipeLine_pc[0] = "-1";
     else
-        pipeLine_pc[0] = fetch.fetch_queue.front();
+        pipeLine_pc[0] = to_string(fetch.fetch_queue.front());
     if(decode.decode_queue.empty())
-        pipeLine_pc[1] = -1;
+        pipeLine_pc[1] = "-1";
     else
     //我将decode的queue改成了int我不知道会对后面造成什么影响
-        pipeLine_pc[1] = stoi(getLastElement(to_string(decode.decode_queue.front())));
+        //pipeLine_pc[1] = getLastElement(to_string(decode.decode_queue.front()));
+        pipeLine_pc[1] = to_string(decode.decode_queue.front());
     if(execute.execute_queue.empty())
-        pipeLine_pc[2] = -1;
+        pipeLine_pc[2] = "-1";
     else
-        pipeLine_pc[2] = execute.execute_queue.front()->pc;
+        temp = execute.execute_queue.front()->ins_text;
+        pipeLine_pc[2] = temp;
     if(memoryaccess.mem_queue.empty())
-        pipeLine_pc[3] = -1;
+        pipeLine_pc[3] = "-1";
     else
-        pipeLine_pc[3] = memoryaccess.mem_queue.front()->pc;
+        temp = memoryaccess.mem_queue.front()->ins_text;
+        pipeLine_pc[3] = temp;
     if(writeback.wb_queue.empty())
-        pipeLine_pc[4] = -1;
+        pipeLine_pc[4] = "-1";
     else
-        pipeLine_pc[4] = writeback.wb_queue.front()->pc;
-
+        temp = writeback.wb_queue.front()->ins_text;
+        pipeLine_pc[4] = temp;
 }
 
 //fetch from pc

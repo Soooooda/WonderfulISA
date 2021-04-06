@@ -20,6 +20,7 @@ struct output
     int16_t value;
     int16_t pc;
     instruction inst;
+    string ins_text;
 };
 
 class Stage

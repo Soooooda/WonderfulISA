@@ -46,7 +46,10 @@ void PipeLine::run_cycle()
 
 
     cout<<"==write back=="<<endl;
-
+    if(!writeback.wb_queue.empty()){
+        cout<<writeback.wb_queue.front()->ins_text;
+        writeback.wb_queue.pop();
+    }
     cout<<"==memory access=="<<endl;
     output *wb_result = memoryaccess.execute(&simulator, &registe);
     if(wb_result)
@@ -138,18 +141,15 @@ void PipeLine::record_pipeline()
     if(execute.execute_queue.empty())
         pipeLine_pc[2] = "-1";
     else
-        temp = execute.execute_queue.front()->ins_text;
-        pipeLine_pc[2] = temp;
+        pipeLine_pc[2] = execute.execute_queue.front()->ins_text;;
     if(memoryaccess.mem_queue.empty())
         pipeLine_pc[3] = "-1";
     else
-        temp = memoryaccess.mem_queue.front()->ins_text;
-        pipeLine_pc[3] = temp;
+        pipeLine_pc[3] = memoryaccess.mem_queue.front()->ins_text;
     if(writeback.wb_queue.empty())
         pipeLine_pc[4] = "-1";
     else
-        temp = writeback.wb_queue.front()->ins_text;
-        pipeLine_pc[4] = temp;
+        pipeLine_pc[4] = writeback.wb_queue.front()->ins_text;
 }
 
 //fetch from pc

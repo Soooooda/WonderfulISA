@@ -19,28 +19,30 @@ output* Decode::execute()
     }
     output* result = (struct output *) malloc(sizeof(output));
     int32_t instrut = decode_queue.front();
-    int32_t opcode = (instrut & 0xfc000000)>>26;
+    int32_t opcode = (instrut & 0x7c000000)>>26;
     int32_t Rd = (instrut & 0x00780000)>>19;
     int32_t Rn = (instrut & 0x00078000)>>15;
     int32_t Rm = (instrut & 0x00007800)>>11;
     int32_t addr = (instrut & 0x0000ffff);
+    int32_t flag = (instrut & 0x000000e0)>>5;
+    int32_t immediate = (instrut & 0x0000001f);
     switch (opcode)
     {
         case 1: // ADD
             result->inst.instruction_operator = 3;
             result->inst.operands[0] = Rd;
-            result->inst.operands[1] = Rm;
-            result->inst.operands[2] = Rn;
-            cout<<"The command is ADD R"<<Rd<<" R"<<Rm<<" R"<<Rn<<endl;
-            result->ins_text = "ADD R"+to_string(Rd)+" R"+to_string(Rm)+" R"+to_string(Rn);
+            result->inst.operands[1] = Rn;
+            result->inst.operands[2] = Rm;
+            cout<<"The command is ADD R"<<Rd<<" R"<<Rn<<" R"<<Rm<<endl;
+            result->ins_text = "ADD R"+to_string(Rd)+" R"+to_string(Rn)+" R"+to_string(Rm);
             break;
         case 4:  //SUB
             result->inst.instruction_operator = 4;
             result->inst.operands[0] = Rd;
-            result->inst.operands[1] = Rm;
-            result->inst.operands[2] = Rn;
-            cout<<"The command is SUB R"<<Rd<<" R"<<Rm<<" R"<<Rn<<endl;
-            result->ins_text = "SUB R"+to_string(Rd)+" R"+to_string(Rm)+" R"+to_string(Rn);
+            result->inst.operands[1] = Rn;
+            result->inst.operands[2] = Rm;
+            cout<<"The command is SUB R"<<Rd<<" R"<<Rn<<" R"<<Rm<<endl;
+            result->ins_text = "SUB R"+to_string(Rd)+" R"+to_string(Rn)+" R"+to_string(Rm);
             break;
         case 11: //LOAD
             result->inst.instruction_operator = 1;
@@ -56,6 +58,17 @@ output* Decode::execute()
             cout<<"The command is STOREI R"<<Rd<<" "<<addr<<" "<<endl;
             result->ins_text = "STOREI R"+to_string(Rd)+" "+to_string(addr)+" ";
             break;
+        case 20: //Branch
+            result->inst.instruction_operator = 20;
+            result->inst.operands[0] = Rd;
+            result->inst.operands[1] = Rn;
+            result->inst.operands[2] = Rm;
+            result->inst.address = immediate;
+            result->inst.cmp = flag;
+            cout<<"Rd:"<<Rd<<endl;
+            cout<<"The command is Branch R"<<Rd<<" R"<<Rn<<" R"<<Rm<<" "<<flag<<" "<<immediate<<endl;
+            result->ins_text = "Branch R"+to_string(Rd)+" R"+to_string(Rn)+" R"+to_string(Rm)+" "+to_string(flag)+" "+to_string(immediate);
+            break;
         case 21://JUMP
             result->inst.instruction_operator = 21;
             result->inst.operands[0] = Rd;
@@ -63,14 +76,20 @@ output* Decode::execute()
             cout<<"The command is JUMP R"<<Rd<<" "<<addr<<" "<<endl;
             result->ins_text = "JUMP R"+to_string(Rd)+" "+to_string(addr)+" ";
             break;
+        case 31://HALT
+            result->inst.instruction_operator = 0;
+            cout<<"The command is HALT";
+            result->ins_text = "HALT";
+            break;
         default:
             result->inst.instruction_operator = -1;
             result->inst.operands[0] = -1;
             result->inst.operands[1] = -1;
             result->inst.operands[2] = -1;
             cout<<"The command is None"<<endl;
-            result->ins_text = "None";
+            result->ins_text = "None "+to_string(opcode);
             break;
+
     };
 
     decode_queue.pop();

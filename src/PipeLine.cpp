@@ -48,6 +48,9 @@ void PipeLine::run_cycle()
     cout<<"==write back=="<<endl;
     if(!writeback.wb_queue.empty()){
         cout<<writeback.wb_queue.front()->ins_text;
+        if (writeback.wb_queue.front()->inst.instruction_operator == 31){
+            pc = -1;
+        }
         writeback.wb_queue.pop();
     }
     cout<<"==memory access=="<<endl;
@@ -86,6 +89,46 @@ void PipeLine::run_cycle()
             }
             pc = alu_result->inst.address;
         }
+        else if (alu_result->inst.instruction_operator == 20)
+        {
+            cout<< "Now Branch"<<endl;
+            switch (alu_result->inst.cmp)
+            {
+                case 0: //equal with immediate
+                    if(registe.get(alu_result->inst.operands[1]) == registe.get(alu_result->inst.operands[2]))
+                    {
+                        while(!execute.execute_queue.empty()){
+                            execute.execute_queue.pop();
+                        }
+                        while(!decode.decode_queue.empty()){
+                            decode.decode_queue.pop();
+                        }
+                        while(!fetch.fetch_queue.empty()){
+                            fetch.fetch_queue.pop();
+                        }
+                        pc = alu_result->inst.address;
+                    }
+                    break;
+                case 1://larger with immediate jump
+                    if(registe.get(alu_result->inst.operands[1]) <= registe.get(alu_result->inst.operands[2]))
+                    {
+                        while(!execute.execute_queue.empty()){
+                            execute.execute_queue.pop();
+                        }
+                        while(!decode.decode_queue.empty()){
+                            decode.decode_queue.pop();
+                        }
+                        while(!fetch.fetch_queue.empty()){
+                            fetch.fetch_queue.pop();
+                        }
+                        pc = alu_result->inst.address;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        
         cout<<"opcode:"<<alu_result->inst.instruction_operator<<endl;
 
     }

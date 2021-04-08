@@ -24,8 +24,8 @@ output* Decode::execute()
     int32_t Rn = (instrut & 0x00078000)>>15;
     int32_t Rm = (instrut & 0x00007800)>>11;
     int32_t addr = (instrut & 0x0000ffff);
-    int32_t flag = (instrut & 0x000000e0)>>5;
-    int32_t immediate = (instrut & 0x0000001f);
+    int32_t flag = (instrut & 0x00000700)>>8;
+    int8_t immediate = (instrut & 0x000000ff);
     switch (opcode)
     {
         case 1: // ADD
@@ -63,11 +63,11 @@ output* Decode::execute()
             result->inst.operands[0] = Rd;
             result->inst.operands[1] = Rn;
             result->inst.operands[2] = Rm;
-            result->inst.address = immediate;
+            result->inst.address = 0 + immediate;
             result->inst.cmp = flag;
             cout<<"Rd:"<<Rd<<endl;
             cout<<"The command is Branch R"<<Rd<<" R"<<Rn<<" R"<<Rm<<" "<<flag<<" "<<immediate<<endl;
-            result->ins_text = "Branch R"+to_string(Rd)+" R"+to_string(Rn)+" R"+to_string(Rm)+" "+to_string(flag)+" "+to_string(immediate);
+            result->ins_text = "Branch R"+to_string(Rd)+" R"+to_string(Rn)+" R"+to_string(Rm)+" "+to_string(flag)+" "+to_string(result->inst.address);
             break;
         case 21://JUMP
             result->inst.instruction_operator = 21;

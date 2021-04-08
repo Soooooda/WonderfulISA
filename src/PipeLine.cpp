@@ -95,6 +95,7 @@ void PipeLine::run_cycle()
             switch (alu_result->inst.cmp)
             {
                 case 0: //equal with immediate
+                    cout<< "branch with qural"<<endl;
                     if(registe.get(alu_result->inst.operands[1]) == registe.get(alu_result->inst.operands[2]))
                     {
                         while(!execute.execute_queue.empty()){
@@ -106,10 +107,12 @@ void PipeLine::run_cycle()
                         while(!fetch.fetch_queue.empty()){
                             fetch.fetch_queue.pop();
                         }
-                        pc = alu_result->inst.address;
+                        cout<<"The new pc:"<<alu_result->pc<<"   "<<alu_result->inst.address<<endl;
+                        pc = pc-3 + alu_result->inst.address ;
                     }
                     break;
                 case 1://larger with immediate jump
+                    cout<<"branch with larger"<<endl;
                     if(registe.get(alu_result->inst.operands[1]) <= registe.get(alu_result->inst.operands[2]))
                     {
                         while(!execute.execute_queue.empty()){
@@ -121,7 +124,8 @@ void PipeLine::run_cycle()
                         while(!fetch.fetch_queue.empty()){
                             fetch.fetch_queue.pop();
                         }
-                        pc = alu_result->inst.address;
+                        cout<<"The new pc:"<<alu_result->pc<<"   "<<alu_result->inst.address<<endl;
+                        pc = pc-3 + alu_result->inst.address;
                     }
                     break;
                 default:
@@ -129,7 +133,6 @@ void PipeLine::run_cycle()
             }
         }
         
-        cout<<"opcode:"<<alu_result->inst.instruction_operator<<endl;
 
     }
 

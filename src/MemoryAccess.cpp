@@ -47,7 +47,7 @@ output *MemoryAccess::execute(Simulator* simulator, Register* registe)
     cout<<"mem time"<<this->time<<endl;
     if (this->time == 0) {
         if(data->inst.instruction_operator == 1){
-            registe->set(data->inst.operands[0],data->value);
+            //registe->set(data->inst.operands[0],data->value);
         }
         return data;
     }

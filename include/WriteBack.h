@@ -14,11 +14,12 @@
 #ifndef WRITEBACK_H
 #define WRITEBACK_H
 # include "../include/Stage.h"
+# include "Register.h"
 class WriteBack: public Stage
 {
     public:
         WriteBack();
-        void execute();
+        void execute(Register * registe);
         queue<output *> wb_queue;
 
 };

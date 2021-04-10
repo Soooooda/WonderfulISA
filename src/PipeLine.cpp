@@ -47,18 +47,20 @@ void PipeLine::run_cycle()
 
     cout<<"==write back=="<<endl;
     if(!writeback.wb_queue.empty()){
-        cout<<writeback.wb_queue.front()->ins_text;
         if (writeback.wb_queue.front()->inst.instruction_operator == 31){
             pc = -1;
+        }
+        else{
+            writeback.execute(&registe);
         }
         writeback.wb_queue.pop();
     }
     cout<<"==memory access=="<<endl;
-    output *wb_result = memoryaccess.execute(&simulator, &registe);
-    if(wb_result)
+    output *ma_result = memoryaccess.execute(&simulator, &registe);
+    if(ma_result)
     {
         memoryaccess.mem_queue.pop();
-        writeback.wb_queue.push(wb_result);
+        writeback.wb_queue.push(ma_result);
 
     }
     if(memoryaccess.time>0){
@@ -73,8 +75,6 @@ void PipeLine::run_cycle()
     output *alu_result = execute.execute(&registe);
     if(alu_result)
     {
-        execute.execute_queue.pop();
-        memoryaccess.mem_queue.push(alu_result);
         if(alu_result->inst.instruction_operator == 21)
         {
             cout<<"Now Jump！";
@@ -96,35 +96,44 @@ void PipeLine::run_cycle()
             {
                 case 0: //equal with immediate
                     cout<< "branch with qural"<<endl;
-                    if(registe.get(alu_result->inst.operands[1]) == registe.get(alu_result->inst.operands[2]))
+                    if(registe.getflag(alu_result->inst.operands[1])!= 0 || registe.getflag(alu_result->inst.operands[2])!= 0){
+                        cout<<"Not finished for R"<< alu_result->inst.operands[1]<<":"<<registe.getflag(alu_result->inst.operands[1])<<" R"<<alu_result->inst.operands[2]<<":"<<registe.getflag(alu_result->inst.operands[2])<<endl;
+                        return;
+                    }
+                    else if(registe.get(alu_result->inst.operands[1]) == registe.get(alu_result->inst.operands[2]))
                     {
-                        while(!execute.execute_queue.empty()){
+                        /*while(!execute.execute_queue.empty()){
                             execute.execute_queue.pop();
-                        }
+                        }*/
                         while(!decode.decode_queue.empty()){
                             decode.decode_queue.pop();
                         }
                         while(!fetch.fetch_queue.empty()){
                             fetch.fetch_queue.pop();
                         }
-                        cout<<"The new pc:"<<alu_result->pc<<"   "<<alu_result->inst.address<<endl;
+                        cout<<"The new pc:"<<pc<<"   "<<alu_result->inst.address<<endl;
                         pc = pc-3 + alu_result->inst.address ;
                     }
                     break;
                 case 1://larger with immediate jump
                     cout<<"branch with larger"<<endl;
-                    if(registe.get(alu_result->inst.operands[1]) <= registe.get(alu_result->inst.operands[2]))
+                    if(registe.getflag(alu_result->inst.operands[1])!= 0 || registe.getflag(alu_result->inst.operands[2])!= 0){
+                        cout<<"Not finished for R"<< alu_result->inst.operands[1]<<":"<<registe.getflag(alu_result->inst.operands[1])<<" R"<<alu_result->inst.operands[2]<<":"<<registe.getflag(alu_result->inst.operands[2])<<endl;
+
+                        return;
+                    }
+                    else if(registe.get(alu_result->inst.operands[1]) <= registe.get(alu_result->inst.operands[2]))
                     {
-                        while(!execute.execute_queue.empty()){
+                        /*while(!execute.execute_queue.empty()){
                             execute.execute_queue.pop();
-                        }
+                        }*/
                         while(!decode.decode_queue.empty()){
                             decode.decode_queue.pop();
                         }
                         while(!fetch.fetch_queue.empty()){
                             fetch.fetch_queue.pop();
                         }
-                        cout<<"The new pc:"<<alu_result->pc<<"   "<<alu_result->inst.address<<endl;
+                        cout<<"The new pc:"<<pc<<"   "<<alu_result->inst.address<<endl;
                         pc = pc-3 + alu_result->inst.address;
                     }
                     break;
@@ -132,12 +141,13 @@ void PipeLine::run_cycle()
                     break;
             }
         }
-        
+        execute.execute_queue.pop();
+        memoryaccess.mem_queue.push(alu_result);   
 
     }
 
     cout<<"==decode=="<<endl;
-    struct output *result = decode.execute();
+    struct output *result = decode.execute(&registe);
     cout<<"decode address:"<<result<<endl;
     if(result)
     {

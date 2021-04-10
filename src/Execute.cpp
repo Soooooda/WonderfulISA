@@ -16,16 +16,16 @@ output *Execute::execute(Register* registe)
     output *data = (struct output *)execute_queue.front();
     cout<<"alu opt:"<<data->inst.instruction_operator<<endl;
 
-    if (data->inst.instruction_operator == 3) {
+    if (data->inst.instruction_operator == 3) {//add
         data->value = registe->get(data->inst.operands[1]) + registe->get(data->inst.operands[2]);
         data->register_id = data->inst.operands[0];
-        registe->set(data->register_id, data->value);
+        //registe->set(data->register_id, data->value);
         cout<<"add:"<<data->value<<endl;
     } else if (data->inst.instruction_operator == 4)
-    {
+    {//minus
         data->value = registe->get(data->inst.operands[1]) - registe->get(data->inst.operands[2]);
         data->register_id = data->inst.operands[0];
-        registe->set(data->register_id, data->value);
+        //registe->set(data->register_id, data->value);
         cout<<"minus:"<<data->value<<endl;
     }
 

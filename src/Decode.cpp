@@ -10,7 +10,7 @@ Decode::Decode()
 
 }
 
-output* Decode::execute()
+output* Decode::execute(Register *registe)
 {
     if(decode_queue.empty())
     {
@@ -33,6 +33,7 @@ output* Decode::execute()
             result->inst.operands[0] = Rd;
             result->inst.operands[1] = Rn;
             result->inst.operands[2] = Rm;
+            registe->add(Rd);
             cout<<"The command is ADD R"<<Rd<<" R"<<Rn<<" R"<<Rm<<endl;
             result->ins_text = "ADD R"+to_string(Rd)+" R"+to_string(Rn)+" R"+to_string(Rm);
             break;
@@ -41,6 +42,7 @@ output* Decode::execute()
             result->inst.operands[0] = Rd;
             result->inst.operands[1] = Rn;
             result->inst.operands[2] = Rm;
+            registe->add(Rd);
             cout<<"The command is SUB R"<<Rd<<" R"<<Rn<<" R"<<Rm<<endl;
             result->ins_text = "SUB R"+to_string(Rd)+" R"+to_string(Rn)+" R"+to_string(Rm);
             break;
@@ -48,8 +50,9 @@ output* Decode::execute()
             result->inst.instruction_operator = 1;
             result->inst.operands[0] = Rd;
             result->inst.address = addr;
-            cout<<"The command is LOADI R"<<Rd<<" "<<addr<<" "<<endl;
-            result->ins_text = "LOADI R"+to_string(Rd)+" "+to_string(addr)+" ";
+            registe->add(Rd);
+            //cout<<"The command is LOADI R"<<Rd<<" "<<addr<<" "<<endl;
+            result->ins_text = "LOADI R"+to_string(Rd)+" "+to_string(addr);
             break;
         case 14: //STORE
             result->inst.instruction_operator = 2;
@@ -65,7 +68,6 @@ output* Decode::execute()
             result->inst.operands[2] = Rm;
             result->inst.address = 0 + immediate;
             result->inst.cmp = flag;
-            cout<<"Rd:"<<Rd<<endl;
             cout<<"The command is Branch R"<<Rd<<" R"<<Rn<<" R"<<Rm<<" "<<flag<<" "<<immediate<<endl;
             result->ins_text = "Branch R"+to_string(Rd)+" R"+to_string(Rn)+" R"+to_string(Rm)+" "+to_string(flag)+" "+to_string(result->inst.address);
             break;

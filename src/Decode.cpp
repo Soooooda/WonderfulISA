@@ -79,7 +79,7 @@ output* Decode::execute(Register *registe)
             result->ins_text = "JUMP R"+to_string(Rd)+" "+to_string(addr)+" ";
             break;
         case 31://HALT
-            result->inst.instruction_operator = 0;
+            result->inst.instruction_operator = 31;
             cout<<"The command is HALT";
             result->ins_text = "HALT";
             break;
@@ -89,7 +89,7 @@ output* Decode::execute(Register *registe)
             result->inst.operands[1] = -1;
             result->inst.operands[2] = -1;
             cout<<"The command is None"<<endl;
-            result->ins_text = "None "+to_string(opcode);
+            result->ins_text = "None ";
             break;
 
     };

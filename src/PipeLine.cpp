@@ -36,7 +36,7 @@ void PipeLine::read_instructions(string *s, int16_t size)
 void PipeLine::initialize(string* s, int16_t size)
 {
     read_instructions(s,size);
-//    fetch.fetch_queue.push(pc);
+
     this->instruction_count = size;
 }
 

@@ -6,6 +6,7 @@
 #include "Fetch.h"
 #include "MemoryAccess.h"
 #include "WriteBack.h"
+#include "Compiler.h"
 #include "../include/simulator.hpp"
 
 class PipeLine
@@ -15,9 +16,9 @@ class PipeLine
         Simulator simulator;
         int16_t pc;
         string* instructions;
-        void read_instructions(string* s, int16_t size);
+        void read_instructions(string* s, int16_t size, int32_t* machine_code);
         void run_cycle();
-        void initialize(string* s, int16_t size);
+        void initialize(string* s, int16_t size, int32_t* machine_code);
         Fetch fetch;
         Decode decode;
         Execute execute;
@@ -28,5 +29,6 @@ class PipeLine
         string pipeLine_pc[5];
         string getLastElement (const std::string& str);
         void record_pipeline();
+        Compiler compiler;
 };
 #endif

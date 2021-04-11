@@ -1,10 +1,5 @@
 # include "../include/Decode.h"
-#include <vector>
-#include <string>
-#include <sstream>
-#include <algorithm>
-#include <iterator>
-#include <stdlib.h>
+
 Decode::Decode()
 {
 

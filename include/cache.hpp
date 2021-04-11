@@ -2,7 +2,12 @@
 #define CACHE_HPP
 #include <iostream>
 #include <cstring>
-
+#include <vector>
+#include <string>
+#include <sstream>
+#include <algorithm>
+#include <iterator>
+#include <stdlib.h>
 using namespace std;
 #define TAG_INDEX_FLAG ((1<<16)-4)
 #define TAG_INDEX_OFFSET 2

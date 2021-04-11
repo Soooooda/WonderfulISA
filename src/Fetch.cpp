@@ -5,7 +5,7 @@ Fetch::Fetch()
     clear(fetch_queue);
 }
 
-int32_t Fetch::execute(string *instruction, Simulator *simulator)
+int32_t Fetch::execute(Simulator *simulator)
 {
     int16_t base = 100;
     if(fetch_queue.empty())

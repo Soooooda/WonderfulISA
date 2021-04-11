@@ -115,6 +115,17 @@ void MainWindow::refresh_pipeline()
     ui->pipelineTable->show();
 }
 
+void MainWindow::refresh_machine_code(int32_t* machine_code, int16_t size)
+{
+    for (int i = 0; i < size; i++) {
+        QListWidgetItem *newItem = new QListWidgetItem;
+        string binary = std::bitset<32>(machine_code[i]).to_string();
+        cout<<binary<<endl;
+        newItem->setText(QString::fromStdString(binary));
+        ui->MachineCodeWidget->insertItem(0, newItem);
+    }
+}
+
 //get value from memory
 void MainWindow::on_pushButton_2_clicked()
 {
@@ -141,12 +152,13 @@ void MainWindow::on_instructionReadButton_clicked()
 {
 
     QStringList Lines = ui->InstructionInput->toPlainText().split('\n');
-    cout<<"Size: "<< Lines.size()<<endl;
     string* instructions = new string[Lines.size()];
     for (int i = 0; i < Lines.size(); i++) {
         instructions[i] = Lines[i].toStdString();
     }
-    pipeline.initialize(instructions, Lines.size());
+    int32_t machine_code[Lines.size()];
+    pipeline.initialize(instructions, Lines.size(),machine_code);
+    refresh_machine_code(machine_code, Lines.size());
     instruction_clicked = true;
 }
 

@@ -30,6 +30,8 @@ private slots:
 
     void refresh_pipeline();
 
+    void refresh_machine_code(int32_t* machine_code, int16_t size);
+
     void on_instructionReadButton_clicked();
 
     void on_next_clicked();

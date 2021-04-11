@@ -13,15 +13,16 @@ PipeLine::PipeLine()
     }
 }
 
-void PipeLine::read_instructions(string *s, int16_t size)
+void PipeLine::read_instructions(string *s, int16_t size, int32_t* machine_code)
 {
     instructions = s;
     int16_t base = 100;
     for(int16_t i = 0; i < size; i++)
-    {   int32_t ins= 0;
-        for(int j = 0; j < 32; j++){
-            ins = ins*2 + stoi(instructions[i].substr(j,1));
-        }
+    {
+        int32_t ins = compiler.get_machine_code(instructions[i]);
+        machine_code[i] = ins;
+//        string binary = std::bitset<32>(ins).to_string();
+//        cout<<binary<<endl;
         int32_t temp_part1 =ins >>16;
         int16_t part1 = temp_part1;
         cout<<"part1: "<<part1<<endl;
@@ -33,10 +34,9 @@ void PipeLine::read_instructions(string *s, int16_t size)
     }
 }
 
-void PipeLine::initialize(string* s, int16_t size)
+void PipeLine::initialize(string* s, int16_t size, int32_t* machine_code)
 {
-    read_instructions(s,size);
-
+    read_instructions(s,size, machine_code);
     this->instruction_count = size;
 }
 
@@ -155,7 +155,7 @@ void PipeLine::run_cycle()
     }
 
     cout<<"==fetch=="<<endl;
-    int32_t fetch_result = fetch.execute(instructions,&simulator);
+    int32_t fetch_result = fetch.execute(&simulator);
     if(fetch_result!=-1)
     {
         decode.decode_queue.push(fetch_result);

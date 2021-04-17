@@ -27,6 +27,13 @@ int32_t Compiler::proccess_add(vector<string> tokens)
         int32_t rm = stoi(tokens[3].erase(0, 1));
         code = code | ADD | (rd<<RD_OFFSET) | (rn<<RN_OFFSET) | (rm<<RM_OFFSET);
     }
+    if(tokens[0]=="ADDI")
+    {
+        int32_t rd = stoi(tokens[1].erase(0, 1));
+        int32_t rn = stoi(tokens[2].erase(0, 1));
+        int32_t immediate = stoi(tokens[3].erase(0, 1));
+        code = code | ADDI | (rd<<RD_OFFSET) | (rn<<RN_OFFSET) | (immediate<<IMMEDIATE_OFFSET);
+    }
     return code;
 }
 
@@ -39,6 +46,13 @@ int32_t Compiler::proccess_sub(vector<string> tokens)
         int32_t rn = stoi(tokens[2].erase(0, 1));
         int32_t rm = stoi(tokens[3].erase(0, 1));
         code = code | SUB | (rd<<RD_OFFSET) | (rn<<RN_OFFSET) | (rm<<RM_OFFSET);
+    }
+    if(tokens[0]=="SUBI")
+    {
+        int32_t rd = stoi(tokens[1].erase(0, 1));
+        int32_t rn = stoi(tokens[2].erase(0, 1));
+        int32_t immediate = stoi(tokens[3].erase(0, 1));
+        code = code | SUBI | (rd<<RD_OFFSET) | (rn<<RN_OFFSET) | (immediate<<IMMEDIATE_OFFSET);
     }
     return code;
 }
@@ -84,7 +98,38 @@ int32_t Compiler::proccess_store(vector<string> tokens)
     }
     return code;
 }
-
+int32_t Compiler::proccess_bit(vector<string> tokens)
+{
+    int32_t code = 0;
+    if(tokens[0]=="AND")
+    {
+        int32_t rd = stoi(tokens[1].erase(0, 1));
+        int32_t rn = stoi(tokens[2].erase(0, 1));
+        int32_t rm = stoi(tokens[3].erase(0, 1));
+        code = code | AND | (rd<<RD_OFFSET) | (rn<<RN_OFFSET) | (rm<<RM_OFFSET);
+    }
+    if(tokens[0]=="OR")
+    {
+        int32_t rd = stoi(tokens[1].erase(0, 1));
+        int32_t rn = stoi(tokens[2].erase(0, 1));
+        int32_t rm = stoi(tokens[3].erase(0, 1));
+        code = code | OR | (rd<<RD_OFFSET) | (rn<<RN_OFFSET) | (rm<<RM_OFFSET);
+    }
+    if(tokens[0]=="NOT")
+    {
+        int32_t rd = stoi(tokens[1].erase(0, 1));
+        int32_t rn = stoi(tokens[2].erase(0, 1));
+        int32_t rm = stoi(tokens[3].erase(0, 1));
+        code = code | NOT | (rd<<RD_OFFSET) | (rn<<RN_OFFSET) | (rm<<RM_OFFSET);
+    }
+    if(tokens[0]=="XOR")
+    {
+        int32_t rd = stoi(tokens[1].erase(0, 1));
+        int32_t rn = stoi(tokens[2].erase(0, 1));
+        int32_t rm = stoi(tokens[3].erase(0, 1));
+        code = code | XOR | (rd<<RD_OFFSET) | (rn<<RN_OFFSET) | (rm<<RM_OFFSET);
+    }
+}
         // from assembly to machine code
 int32_t Compiler::get_machine_code(string assembly)
 {
@@ -106,6 +151,8 @@ int32_t Compiler::get_machine_code(string assembly)
         return proccess_store(tokens);
     if(opcode=="HALT")
         return proccess_halt(tokens);
+    if(opcode =="AND"||opcode =="OR"||opcode =="NOT"||opcode =="XOR")
+        return proccess_bit(tokens);
     return -1;
 }
 

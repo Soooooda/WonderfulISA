@@ -15,7 +15,21 @@ output *MemoryAccess::execute(Simulator* simulator, Register* registe)
     output *data = (struct output*) mem_queue.front();
     if (this->time == 0) {
         cout<<"Mem Opt:"<<data->inst.instruction_operator <<endl;
-        if (data->inst.instruction_operator == 1) {
+        if (data->inst.instruction_operator == 10)//LOAD
+        {
+            if(simulator->l1_cache.request_cache(data->inst.address) == -1){
+                simulator->read_memory(registe->get(data->inst.operands[1]));
+                cout<<"Start Store"<<endl;
+                this->time = 3;
+            }
+            else{
+                simulator->read_memory(registe->get(data->inst.operands[1]));
+                cout<<"Start Store"<<endl;
+                this->time = 1;
+            }
+        } 
+        else if (data->inst.instruction_operator == 11) //LOADI
+        {
             if(simulator->l1_cache.request_cache(data->inst.address) == -1){
                 data->value = simulator->read_memory(data->inst.address);
                 cout<<"Start Load"<<endl;
@@ -26,7 +40,23 @@ output *MemoryAccess::execute(Simulator* simulator, Register* registe)
                 cout<<"Start Load"<<endl;
                 this->time = 1;
             }
-        } else if (data->inst.instruction_operator == 2)
+        }
+        else if (data->inst.instruction_operator == 13)//STORE
+        {
+            if(simulator->l1_cache.request_cache(data->inst.address) == -1){
+                int16_t address = registe->get(data->inst.operands[1]);
+                simulator->write_memory(address, registe->get(data->inst.operands[0]));
+                cout<<"Start Store"<<endl;
+                this->time = 3;
+            }
+            else{
+                int16_t address = registe->get(data->inst.operands[1]);
+                simulator->write_memory(address, registe->get(data->inst.operands[0]));
+                cout<<"Start Store"<<endl;
+                this->time = 1;
+            }
+        }
+        else if (data->inst.instruction_operator == 14)//STOREI
         {
             if(simulator->l1_cache.request_cache(data->inst.address) == -1){
                 simulator->write_memory(data->inst.address, registe->get(data->inst.operands[0]));
@@ -38,7 +68,8 @@ output *MemoryAccess::execute(Simulator* simulator, Register* registe)
                 cout<<"Start Store"<<endl;
                 this->time = 1;
             }
-        } else {
+        }  
+        else {
             return data;
         }
     }

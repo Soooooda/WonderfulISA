@@ -24,13 +24,21 @@ output* Decode::execute(Register *registe)
     switch (opcode)
     {
         case 1: // ADD
-            result->inst.instruction_operator = 3;
+            result->inst.instruction_operator = 1;
             result->inst.operands[0] = Rd;
             result->inst.operands[1] = Rn;
             result->inst.operands[2] = Rm;
             registe->add(Rd);
             cout<<"The command is ADD R"<<Rd<<" R"<<Rn<<" R"<<Rm<<endl;
             result->ins_text = "ADD R"+to_string(Rd)+" R"+to_string(Rn)+" R"+to_string(Rm);
+            break;
+        case 2: //ADDI
+            result->inst.instruction_operator = 2;
+            result->inst.operands[0] = Rd;
+            result->inst.address = immediate;
+            registe->add(Rd);
+            cout<<"The command is ADDI R"<<Rd<<" "<<immediate<<endl;
+            result->ins_text = "ADDI R"+to_string(Rd)+" "+to_string(immediate);
             break;
         case 4:  //SUB
             result->inst.instruction_operator = 4;
@@ -41,20 +49,88 @@ output* Decode::execute(Register *registe)
             cout<<"The command is SUB R"<<Rd<<" R"<<Rn<<" R"<<Rm<<endl;
             result->ins_text = "SUB R"+to_string(Rd)+" R"+to_string(Rn)+" R"+to_string(Rm);
             break;
-        case 11: //LOAD
-            result->inst.instruction_operator = 1;
+        case 5: //SUBI
+            result->inst.instruction_operator = 5;
+            result->inst.operands[0] = Rd;
+            result->inst.address = immediate;
+            registe->add(Rd);
+            cout<<"The command is SUBI R"<<Rd<<" "<<immediate<<endl;
+            result->ins_text = "SUBI R"+to_string(Rd)+" "+to_string(immediate);
+            break;
+        case 7:  //MUL
+            result->inst.instruction_operator = 7;
+            result->inst.operands[0] = Rd;
+            result->inst.operands[1] = Rn;
+            result->inst.operands[2] = Rm;
+            registe->add(Rd);
+            cout<<"The command is MUL R"<<Rd<<" R"<<Rn<<" R"<<Rm<<endl;
+            result->ins_text = "MUL R"+to_string(Rd)+" R"+to_string(Rn)+" R"+to_string(Rm);
+            break;
+        case 10: //LOAD
+            result->inst.instruction_operator = 10;
+            result->inst.operands[0] = Rd;
+            result->inst.operands[1] = Rn;
+            registe->add(Rd);
+            //cout<<"The command is "LOAD R"<<to_string(Rd)<<" R"<<to_string(Rn)<<endl;
+            result->ins_text = "LOAD R"+to_string(Rd)+" R"+to_string(Rn);
+            break; 
+        case 11: //LOADI
+            result->inst.instruction_operator = 11;
             result->inst.operands[0] = Rd;
             result->inst.address = addr;
             registe->add(Rd);
             //cout<<"The command is LOADI R"<<Rd<<" "<<addr<<" "<<endl;
             result->ins_text = "LOADI R"+to_string(Rd)+" "+to_string(addr);
             break;
-        case 14: //STORE
-            result->inst.instruction_operator = 2;
+        case 13://STORE
+            result->inst.instruction_operator = 13;
+            result->inst.operands[0] = Rd;
+            result->inst.operands[1] = Rn;
+            registe->add(Rd);
+            //cout<<"The command is "LOAD R"<<to_string(Rd)<<" R"<<to_string(Rn)<<endl;
+            result->ins_text = "STORE R"+to_string(Rd)+" R"+to_string(Rn);
+            break;
+        case 14: //STOREI
+            result->inst.instruction_operator = 14;
             result->inst.operands[0] = Rd;
             result->inst.address = addr;
             cout<<"The command is STOREI R"<<Rd<<" "<<addr<<" "<<endl;
             result->ins_text = "STOREI R"+to_string(Rd)+" "+to_string(addr)+" ";
+            break;
+        case 16://AND
+            result->inst.instruction_operator = 16;
+            result->inst.operands[0] = Rd;
+            result->inst.operands[1] = Rn;
+            result->inst.operands[2] = Rm;
+            registe->add(Rd);
+            cout<<"The command is AND R"<<Rd<<" R"<<Rn<<" R"<<Rm<<endl;
+            result->ins_text = "AND R"+to_string(Rd)+" R"+to_string(Rn)+" R"+to_string(Rm);
+            break;
+        case 17://OR
+            result->inst.instruction_operator = 17;
+            result->inst.operands[0] = Rd;
+            result->inst.operands[1] = Rn;
+            result->inst.operands[2] = Rm;
+            registe->add(Rd);
+            cout<<"The command is OR R"<<Rd<<" R"<<Rn<<" R"<<Rm<<endl;
+            result->ins_text = "OR R"+to_string(Rd)+" R"+to_string(Rn)+" R"+to_string(Rm);
+            break;
+        case 18://NOT
+            result->inst.instruction_operator = 18;
+            result->inst.operands[0] = Rd;
+            result->inst.operands[1] = Rn;
+            registe->add(Rd);
+            cout<<"The command is NOT R"<<Rd<<" R"<<Rn<<" R"<<Rm<<endl;
+            result->ins_text = "NOT R"+to_string(Rd)+" R"+to_string(Rn)+" R"+to_string(Rm);
+            break;
+        case 19://XOR
+            result->inst.instruction_operator = 19;
+            result->inst.operands[0] = Rd;
+            result->inst.operands[1] = Rn;
+            result->inst.operands[2] = Rm;
+            registe->add(Rd);
+            cout<<"The command is XOR R"<<Rd<<" R"<<Rn<<" R"<<Rm<<endl;
+            result->ins_text = "XOR R"+to_string(Rd)+" R"+to_string(Rn)+" R"+to_string(Rm);
             break;
         case 20: //Branch
             result->inst.instruction_operator = 20;

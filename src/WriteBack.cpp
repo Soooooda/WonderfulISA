@@ -14,19 +14,13 @@ void WriteBack::execute(Register *registe)
     }
     else
     {
-        if(data->inst.instruction_operator == 1){//LOAD
+        int temp = data->inst.instruction_operator;
+        if(temp != 13 && temp != 14 &&temp != 20 && temp != 21 && temp != 31){
             registe->set(data->inst.operands[0],data->value);
             registe->min(data->inst.operands[0]);
 
         }
-        else if(data->inst.instruction_operator == 3){//ADD
-            registe->set(data->inst.operands[0],data->value);
-            registe->min(data->inst.operands[0]);
-        }
-        else if(data->inst.instruction_operator == 4){//Minus
-            registe->set(data->inst.operands[0],data->value);
-            registe->min(data->inst.operands[0]);
-        }
+        
     }
     //free(data);
     return;

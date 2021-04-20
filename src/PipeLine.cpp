@@ -40,7 +40,7 @@ void PipeLine::initialize(string* s, int16_t size, int32_t* machine_code)
     this->instruction_count = size;
 }
 
-void PipeLine::run_cycle()
+void PipeLine::run_cycle(int model)
 {    
 
 
@@ -163,8 +163,18 @@ void PipeLine::run_cycle()
 
     if(pc != -1)//可以给个1000000000试试看
     {
-        fetch.fetch_queue.push(pc);
-        pc+=1;
+        if(model == 2 || model == 4){
+            fetch.fetch_queue.push(pc);
+            pc+=1;
+        }
+        
+        else{
+            if(decode.decode_queue.empty()&& execute.execute_queue.empty() && memoryaccess.mem_queue.empty()&& writeback.wb_queue.empty())
+            {
+                fetch.fetch_queue.push(pc);
+                pc+=1;
+            }
+        }
     }
     cout<<"==finish==\n\n"<<endl;
 

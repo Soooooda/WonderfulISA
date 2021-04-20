@@ -17,7 +17,7 @@ class PipeLine
         int16_t pc;
         string* instructions;
         void read_instructions(string* s, int16_t size, int32_t* machine_code);
-        void run_cycle();
+        void run_cycle(int model);//model: 1 no pip no cache, 2: no cache, 3: no pip, 4: pip and cache
         void initialize(string* s, int16_t size, int32_t* machine_code);
         Fetch fetch;
         Decode decode;

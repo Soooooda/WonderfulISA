@@ -7,7 +7,7 @@ class MemoryAccess: public Stage
 {
     public:
         MemoryAccess();
-        output *execute(Simulator* simulator, Register* registe);
+        output *execute(Simulator* simulator, Register* registe ,int model);
         queue<output *> mem_queue;
         output result;
         int16_t time;

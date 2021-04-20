@@ -56,7 +56,7 @@ void PipeLine::run_cycle(int model)
         writeback.wb_queue.pop();
     }
     cout<<"==memory access=="<<endl;
-    output *ma_result = memoryaccess.execute(&simulator, &registe);
+    output *ma_result = memoryaccess.execute(&simulator, &registe, model);
     if(ma_result)
     {
         memoryaccess.mem_queue.pop();

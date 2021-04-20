@@ -166,8 +166,8 @@ void MainWindow::on_next_clicked()
 {
     if(instruction_clicked)
     {
-        int model = 4
-        pipeline.run_cycle(4);
+        int model = 4;
+        pipeline.run_cycle(model);
         refresh_register();
         refresh_memory();
         refresh_cache();

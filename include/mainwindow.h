@@ -2,6 +2,10 @@
 #define MAINWINDOW_H
 #include "../include/PipeLine.hpp"
 #include <QMainWindow>
+//#define ENABLE_PIPELINE_ENABLE_CACHE 0
+//#define ENABLE_PIPELINE_NO_CACHE 1
+//#define NO_PIPELINE_ENABLE_CACHE 2
+//#define NO_PIPELINE_NO_CACHE 3
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -35,6 +39,10 @@ private slots:
     void on_instructionReadButton_clicked();
 
     void on_next_clicked();
+
+    int32_t getRunningStatus();
+
+    void on_nextHundred_clicked();
 
 private:
     Ui::MainWindow *ui;

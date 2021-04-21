@@ -50,6 +50,14 @@ MainWindow::MainWindow(QWidget *parent)
     register_header<<"value";
     ui->registerTable->setHorizontalHeaderLabels(register_header);
 
+    //pipeline mode
+    ui->pipelineModeBox->addItem("No Pipeline");
+    ui->pipelineModeBox->addItem("With Pipeline");
+
+    //cache mode
+    ui->CacheModeBox->addItem("No Cache");
+    ui->CacheModeBox->addItem("With Cache");
+
     //has instruction clicked before next cycle button?
     instruction_clicked = false;
 
@@ -162,12 +170,39 @@ void MainWindow::on_instructionReadButton_clicked()
     instruction_clicked = true;
 }
 
+int32_t MainWindow::getRunningStatus()
+{
+    //#define ENABLE_PIPELINE_ENABLE_CACHE 1
+    //#define ENABLE_PIPELINE_NO_CACHE 2
+    //#define NO_PIPELINE_ENABLE_CACHE 3
+    //#define NO_PIPELINE_NO_CACHE 4
+    //4是cache pip， 3 是no pip， 2 是弄cache， 1 是no both
+    return ui->CacheModeBox->currentIndex()*2+ui->pipelineModeBox->currentIndex()+1;
+}
+
 void MainWindow::on_next_clicked()
 {
     if(instruction_clicked)
     {
-        int model = 4
-        pipeline.run_cycle(4);
+        pipeline.run_cycle(getRunningStatus());
+        refresh_register();
+        refresh_memory();
+        refresh_cache();
+        refresh_pipeline();
+    }
+}
+
+
+
+void MainWindow::on_nextHundred_clicked()
+{
+    if(instruction_clicked)
+    {
+        int32_t mode = getRunningStatus();
+        for(int i = 0;i<100;i++)
+        {
+            pipeline.run_cycle(mode);
+        }
         refresh_register();
         refresh_memory();
         refresh_cache();

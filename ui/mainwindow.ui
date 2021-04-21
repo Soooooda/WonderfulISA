@@ -32,9 +32,9 @@
    <widget class="QPushButton" name="next">
     <property name="geometry">
      <rect>
-      <x>600</x>
+      <x>582</x>
       <y>630</y>
-      <width>113</width>
+      <width>131</width>
       <height>32</height>
      </rect>
     </property>
@@ -42,7 +42,7 @@
      <bool>true</bool>
     </property>
     <property name="text">
-     <string>Next</string>
+     <string>Next Cycle</string>
     </property>
    </widget>
    <widget class="QLabel" name="cache_label">
@@ -312,6 +312,42 @@
       <width>191</width>
       <height>231</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="pipelineModeBox">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>640</y>
+      <width>151</width>
+      <height>32</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="CacheModeBox">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>670</y>
+      <width>151</width>
+      <height>32</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="nextHundred">
+    <property name="geometry">
+     <rect>
+      <x>582</x>
+      <y>660</y>
+      <width>131</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="text">
+     <string>Next 100 Cycles</string>
     </property>
    </widget>
   </widget>

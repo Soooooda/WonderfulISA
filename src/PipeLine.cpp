@@ -43,8 +43,6 @@ void PipeLine::initialize(string* s, int16_t size, int32_t* machine_code)
 void PipeLine::run_cycle(int model)
 {    
 
-
-
     cout<<"==write back=="<<endl;
     if(!writeback.wb_queue.empty()){
         if (writeback.wb_queue.front()->inst.instruction_operator == 31){

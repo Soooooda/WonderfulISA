@@ -58,23 +58,10 @@
      <string>cache view</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBox">
+   <widget class="QLabel" name="TimeCycleLabel">
     <property name="geometry">
      <rect>
-      <x>870</x>
-      <y>20</y>
-      <width>86</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>L2 cache</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>350</x>
+      <x>460</x>
       <y>20</y>
       <width>71</width>
       <height>16</height>
@@ -82,62 +69,6 @@
     </property>
     <property name="text">
      <string>time cycle</string>
-    </property>
-   </widget>
-   <widget class="QTextBrowser" name="textBrowser_2">
-    <property name="geometry">
-     <rect>
-      <x>420</x>
-      <y>20</y>
-      <width>51</width>
-      <height>21</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>480</x>
-      <y>20</y>
-      <width>91</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Current order</string>
-    </property>
-   </widget>
-   <widget class="QTextBrowser" name="textBrowser_3">
-    <property name="geometry">
-     <rect>
-      <x>570</x>
-      <y>20</y>
-      <width>101</width>
-      <height>21</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>680</x>
-      <y>20</y>
-      <width>71</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Next Order</string>
-    </property>
-   </widget>
-   <widget class="QTextBrowser" name="textBrowser_4">
-    <property name="geometry">
-     <rect>
-      <x>750</x>
-      <y>20</y>
-      <width>111</width>
-      <height>21</height>
-     </rect>
     </property>
    </widget>
    <widget class="QLabel" name="memory_label">
@@ -167,8 +98,8 @@
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>20</y>
-      <width>104</width>
+      <y>10</y>
+      <width>151</width>
       <height>21</height>
      </rect>
     </property>
@@ -177,7 +108,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>20</y>
+      <y>10</y>
       <width>59</width>
       <height>16</height>
      </rect>
@@ -204,7 +135,7 @@
      <rect>
       <x>80</x>
       <y>40</y>
-      <width>104</width>
+      <width>151</width>
       <height>21</height>
      </rect>
     </property>
@@ -212,8 +143,8 @@
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>20</y>
+      <x>10</x>
+      <y>60</y>
       <width>113</width>
       <height>32</height>
      </rect>
@@ -225,8 +156,8 @@
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>40</y>
+      <x>130</x>
+      <y>60</y>
       <width>113</width>
       <height>32</height>
      </rect>
@@ -317,8 +248,8 @@
    <widget class="QComboBox" name="pipelineModeBox">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>640</y>
+      <x>290</x>
+      <y>10</y>
       <width>151</width>
       <height>32</height>
      </rect>
@@ -327,8 +258,8 @@
    <widget class="QComboBox" name="CacheModeBox">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>670</y>
+      <x>290</x>
+      <y>40</y>
       <width>151</width>
       <height>32</height>
      </rect>
@@ -348,6 +279,19 @@
     </property>
     <property name="text">
      <string>Next 100 Cycles</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="TimeCycleText">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>20</y>
+      <width>61</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>

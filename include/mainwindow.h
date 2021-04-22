@@ -19,6 +19,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     PipeLine pipeline;
     bool instruction_clicked;
+    int32_t time_cycle_count;
     ~MainWindow();
 
 private slots:
@@ -43,6 +44,8 @@ private slots:
     int32_t getRunningStatus();
 
     void on_nextHundred_clicked();
+
+
 
 private:
     Ui::MainWindow *ui;

@@ -58,6 +58,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->CacheModeBox->addItem("No Cache");
     ui->CacheModeBox->addItem("With Cache");
 
+    //cycle count
+    ui->TimeCycleText->setText("0");
+    time_cycle_count = 0;
+
     //has instruction clicked before next cycle button?
     instruction_clicked = false;
 
@@ -189,6 +193,8 @@ void MainWindow::on_next_clicked()
         refresh_memory();
         refresh_cache();
         refresh_pipeline();
+        time_cycle_count+=1;
+        ui->TimeCycleText->setText(QString::fromStdString(to_string(time_cycle_count)));
     }
 }
 
@@ -207,5 +213,7 @@ void MainWindow::on_nextHundred_clicked()
         refresh_memory();
         refresh_cache();
         refresh_pipeline();
+        time_cycle_count+=100;
+        ui->TimeCycleText->setText(QString::fromStdString(to_string(time_cycle_count)));
     }
 }

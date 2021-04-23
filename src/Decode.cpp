@@ -157,6 +157,12 @@ output* Decode::execute(Register *registe)
             //cout<<"The command is JUMP R"<<Rd<<" "<<addr<<" "<<endl;
             result->ins_text = "JUMP R"+to_string(Rd)+" "+to_string(addr)+" ";
             break;
+        case 26: //MULV
+            result->inst.instruction_operator = 26;
+            result->inst.operands[0] = Rd;
+            registe->add(Rd);
+            result->ins_text = "MUL R"+to_string(Rd);
+            break;    
         case 31://HALT
             result->inst.instruction_operator = 31;
             //cout<<"The command is HALT";

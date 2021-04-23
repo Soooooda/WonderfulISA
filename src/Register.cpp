@@ -19,6 +19,9 @@ int16_t Register::getflag(int16_t index)
 {
     return flags[index];
 }
+int16_t Register::getvector(int16_t index1, int16_t index2){
+    return vector_registers[index1][index2];
+}
 void Register::set(int16_t index, int16_t value)
 {
     registers[index] = value;

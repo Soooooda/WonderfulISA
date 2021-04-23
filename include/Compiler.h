@@ -10,6 +10,7 @@
 #define ADDI 2<<OPCODE_OFFSET
 #define SUB 4<<OPCODE_OFFSET
 #define SUBI 5<<OPCODE_OFFSET
+#define MUL 7<<OPCODE_OFFSET
 #define LOAD 10<<OPCODE_OFFSET
 #define LOADI 11<<OPCODE_OFFSET
 #define LOADV 12<<OPCODE_OFFSET
@@ -21,6 +22,7 @@
 #define XOR 19<<OPCODE_OFFSET
 #define BRANCH 20<<OPCODE_OFFSET
 #define JUMP 21<<OPCODE_OFFSET
+#define MULV 26<<OPCODE_OFFSET
 #define HALT 31<<OPCODE_OFFSET
 #define BRANCH_FLAG_OFFSET 8
 
@@ -31,6 +33,7 @@ class Compiler
         int32_t get_machine_code(string s);
         int32_t proccess_add(vector<string> tokens);
         int32_t proccess_sub(vector<string> tokens);
+        int32_t proccess_mul(vector<string> tokens);
         int32_t proccess_load(vector<string> tokens);
         int32_t proccess_branch(vector<string> tokens);
         int32_t proccess_halt(vector<string> tokens);

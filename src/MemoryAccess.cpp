@@ -42,12 +42,13 @@ output *MemoryAccess::execute(Simulator* simulator, Register* registe, int model
             }
         }
         else if (data->inst.instruction_operator == 12)//LOADV
-        
-            int type = data->inst.cmp;//0 load row, 1 laod column
+        {
+            //0 load row, 1 laod column
+            int type = data->inst.cmp;
             int row = registe->get(data->inst.operands[1]);
             int col = registe->get(data->inst.operands[2]);
             int init_address = registe->get(data->inst.operands[0]);
-            if(type == 0)
+            if( type == 0)
             {
                 for(int i = 0; i < row; i++){
                     if(simulator->l1_cache.request_cache(data->inst.address) == -1 || model == 1 || model == 3){

@@ -57,6 +57,24 @@ int32_t Compiler::proccess_sub(vector<string> tokens)
     return code;
 }
 
+int32_t Compiler::proccess_mul(vector<string> tokens)
+{
+    int32_t code = 0;
+    if(tokens[0]=="MUL")
+    {
+        int32_t rd = stoi(tokens[1].erase(0, 1));
+        int32_t rn = stoi(tokens[2].erase(0, 1));
+        int32_t rm = stoi(tokens[3].erase(0, 1));
+        code = code | MUL | (rd<<RD_OFFSET) | (rn<<RN_OFFSET) | (rm<<RM_OFFSET);
+    }
+    if(tokens[0]=="MULV")
+    {
+        int32_t rd = stoi(tokens[1].erase(0, 1));
+        code = code | MULV | (rd<<RD_OFFSET);
+    }
+    return code;
+}
+
 int32_t Compiler::proccess_load(vector<string> tokens)
 {
     int32_t code = 0;
@@ -151,6 +169,8 @@ int32_t Compiler::get_machine_code(string assembly)
     string opcode = tokens[0];
     if(opcode=="ADD" || opcode=="ADDI")
         return proccess_add(tokens);
+    if(opcode=="MUL" || opcode=="MULV")
+        return proccess_mul(tokens);
     if(opcode=="SUB")
         return proccess_sub(tokens);
     if(opcode=="LOAD" || opcode=="LOADI" || opcode == "LOADV")

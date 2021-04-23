@@ -6,6 +6,8 @@ Register::Register()
     {
         registers[i] = 0;
         flags[i] = 0;
+        vector_registers[0][i] = 0;
+        vector_registers[1][i] = 0;
     }
 }
 
@@ -30,4 +32,8 @@ void Register::add(int16_t index)
 void Register::min(int16_t index)
 {
     flags[index]--;
+}
+
+void Register::set_vector(int16_t index1, int16_t index2, int16_t value){
+    vector_registers[index1][index2] = value;
 }

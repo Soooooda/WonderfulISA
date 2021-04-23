@@ -41,6 +41,44 @@ output *MemoryAccess::execute(Simulator* simulator, Register* registe, int model
                 this->time = 1;
             }
         }
+        else if (data->inst.instruction_operator == 12)//LOADV
+        
+            int type = data->inst.cmp;//0 load row, 1 laod column
+            int row = registe->get(data->inst.operands[1]);
+            int col = registe->get(data->inst.operands[2]);
+            int init_address = registe->get(data->inst.operands[0]);
+            if(type == 0)
+            {
+                for(int i = 0; i < row; i++){
+                    if(simulator->l1_cache.request_cache(data->inst.address) == -1 || model == 1 || model == 3){
+                        data->vector[i]= simulator->read_memory(init_address);
+                        init_address++;
+                        this->time+=3;
+                    }
+                    else{
+                        data->vector[i] = simulator->read_memory(data->inst.address);
+                        init_address++;
+                        this->time++;
+                    }
+                }
+            }
+            else if(type == 1)
+            {
+                for(int i = 0; i < col; i++){
+                    if(simulator->l1_cache.request_cache(data->inst.address) == -1 || model == 1 || model == 3){
+                        data->vector[i]= simulator->read_memory(init_address);
+                        init_address += row;
+                        this->time+=3;
+                    }
+                    else{
+                        data->vector[i] = simulator->read_memory(data->inst.address);
+                        init_address += row ;
+                        this->time++;
+                    }
+                }
+            }
+
+        }  
         else if (data->inst.instruction_operator == 13)//STORE
         {
             if(simulator->l1_cache.request_cache(data->inst.address) == -1 || model == 1 || model == 3){
@@ -68,7 +106,7 @@ output *MemoryAccess::execute(Simulator* simulator, Register* registe, int model
                 cout<<"Start Store"<<endl;
                 this->time = 1;
             }
-        }  
+        }
         else {
             return data;
         }

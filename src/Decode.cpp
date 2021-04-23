@@ -29,7 +29,7 @@ output* Decode::execute(Register *registe)
             result->inst.operands[1] = Rn;
             result->inst.operands[2] = Rm;
             registe->add(Rd);
-            cout<<"The command is ADD R"<<Rd<<" R"<<Rn<<" R"<<Rm<<endl;
+            //cout<<"The command is ADD R"<<Rd<<" R"<<Rn<<" R"<<Rm<<endl;
             result->ins_text = "ADD R"+to_string(Rd)+" R"+to_string(Rn)+" R"+to_string(Rm);
             break;
         case 2: //ADDI
@@ -37,7 +37,7 @@ output* Decode::execute(Register *registe)
             result->inst.operands[0] = Rd;
             result->inst.address = immediate;
             registe->add(Rd);
-            cout<<"The command is ADDI R"<<Rd<<" "<<immediate<<endl;
+            //cout<<"The command is ADDI R"<<Rd<<" "<<immediate<<endl;
             result->ins_text = "ADDI R"+to_string(Rd)+" "+to_string(immediate);
             break;
         case 4:  //SUB
@@ -46,7 +46,7 @@ output* Decode::execute(Register *registe)
             result->inst.operands[1] = Rn;
             result->inst.operands[2] = Rm;
             registe->add(Rd);
-            cout<<"The command is SUB R"<<Rd<<" R"<<Rn<<" R"<<Rm<<endl;
+            //cout<<"The command is SUB R"<<Rd<<" R"<<Rn<<" R"<<Rm<<endl;
             result->ins_text = "SUB R"+to_string(Rd)+" R"+to_string(Rn)+" R"+to_string(Rm);
             break;
         case 5: //SUBI
@@ -54,7 +54,7 @@ output* Decode::execute(Register *registe)
             result->inst.operands[0] = Rd;
             result->inst.address = immediate;
             registe->add(Rd);
-            cout<<"The command is SUBI R"<<Rd<<" "<<immediate<<endl;
+            //cout<<"The command is SUBI R"<<Rd<<" "<<immediate<<endl;
             result->ins_text = "SUBI R"+to_string(Rd)+" "+to_string(immediate);
             break;
         case 7:  //MUL
@@ -63,7 +63,7 @@ output* Decode::execute(Register *registe)
             result->inst.operands[1] = Rn;
             result->inst.operands[2] = Rm;
             registe->add(Rd);
-            cout<<"The command is MUL R"<<Rd<<" R"<<Rn<<" R"<<Rm<<endl;
+            //cout<<"The command is MUL R"<<Rd<<" R"<<Rn<<" R"<<Rm<<endl;
             result->ins_text = "MUL R"+to_string(Rd)+" R"+to_string(Rn)+" R"+to_string(Rm);
             break;
         case 10: //LOAD
@@ -81,6 +81,14 @@ output* Decode::execute(Register *registe)
             registe->add(Rd);
             //cout<<"The command is LOADI R"<<Rd<<" "<<addr<<" "<<endl;
             result->ins_text = "LOADI R"+to_string(Rd)+" "+to_string(addr);
+            break;
+        case 12: //LOADV
+            result->inst.instruction_operator = 12;
+            result->inst.operands[0] = Rd;
+            result->inst.operands[1] = Rn;
+            result->inst.operands[2] = Rm;
+            result->inst.cmp = flag;
+            result->ins_text = "LOADV R"+to_string(Rd)+" R"+to_string(Rn)+" R"+to_string(Rm)+" "+to_string(flag);
             break;
         case 13://STORE
             result->inst.instruction_operator = 13;
@@ -129,7 +137,7 @@ output* Decode::execute(Register *registe)
             result->inst.operands[1] = Rn;
             result->inst.operands[2] = Rm;
             registe->add(Rd);
-            cout<<"The command is XOR R"<<Rd<<" R"<<Rn<<" R"<<Rm<<endl;
+            //cout<<"The command is XOR R"<<Rd<<" R"<<Rn<<" R"<<Rm<<endl;
             result->ins_text = "XOR R"+to_string(Rd)+" R"+to_string(Rn)+" R"+to_string(Rm);
             break;
         case 20: //Branch
@@ -139,19 +147,19 @@ output* Decode::execute(Register *registe)
             result->inst.operands[2] = Rm;
             result->inst.address = 0 + immediate;
             result->inst.cmp = flag;
-            cout<<"The command is Branch R"<<Rd<<" R"<<Rn<<" R"<<Rm<<" "<<flag<<" "<<immediate<<endl;
+            //cout<<"The command is Branch R"<<Rd<<" R"<<Rn<<" R"<<Rm<<" "<<flag<<" "<<immediate<<endl;
             result->ins_text = "Branch R"+to_string(Rd)+" R"+to_string(Rn)+" R"+to_string(Rm)+" "+to_string(flag)+" "+to_string(result->inst.address);
             break;
         case 21://JUMP
             result->inst.instruction_operator = 21;
             result->inst.operands[0] = Rd;
             result->inst.address = addr;
-            cout<<"The command is JUMP R"<<Rd<<" "<<addr<<" "<<endl;
+            //cout<<"The command is JUMP R"<<Rd<<" "<<addr<<" "<<endl;
             result->ins_text = "JUMP R"+to_string(Rd)+" "+to_string(addr)+" ";
             break;
         case 31://HALT
             result->inst.instruction_operator = 31;
-            cout<<"The command is HALT";
+            //cout<<"The command is HALT";
             result->ins_text = "HALT";
             break;
         default:
@@ -159,7 +167,7 @@ output* Decode::execute(Register *registe)
             result->inst.operands[0] = -1;
             result->inst.operands[1] = -1;
             result->inst.operands[2] = -1;
-            cout<<"The command is None"<<endl;
+            //cout<<"The command is None"<<endl;
             result->ins_text = "None ";
             break;
 

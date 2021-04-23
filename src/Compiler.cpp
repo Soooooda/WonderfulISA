@@ -66,6 +66,16 @@ int32_t Compiler::proccess_load(vector<string> tokens)
         int32_t immediate = stoi(tokens[2]);
         code = code | LOADI | (rd<<RD_OFFSET) | (immediate<<IMMEDIATE_OFFSET);
     }
+    if(tokens[0] == "LOADV")
+    {
+        int32_t code = 0;
+        int32_t rd = stoi(tokens[1].erase(0, 1));
+        int32_t rn = stoi(tokens[1].erase(0, 1));
+        int32_t rm = stoi(tokens[1].erase(0, 1));
+        int32_t flag = stoi(tokens[1].erase(0, 1));
+        code = code | LOADV | (rd<<RD_OFFSET) | (rn<<RN_OFFSET) | (rm<<RM_OFFSET) | (flag<<BRANCH_FLAG_OFFSET);
+
+    }
     return code;
 }
 
@@ -143,7 +153,7 @@ int32_t Compiler::get_machine_code(string assembly)
         return proccess_add(tokens);
     if(opcode=="SUB")
         return proccess_sub(tokens);
-    if(opcode=="LOAD" || opcode=="LOADI")
+    if(opcode=="LOAD" || opcode=="LOADI" || opcode == "LOADV")
         return proccess_load(tokens);
     if(opcode=="BRANCH")
         return proccess_branch(tokens);

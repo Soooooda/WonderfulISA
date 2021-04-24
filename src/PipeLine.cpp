@@ -113,7 +113,7 @@ void PipeLine::run_cycle(int model)
                         pc = pc-3 + alu_result->inst.address ;
                     }
                     break;
-                case 1://larger with immediate jump
+                case 1://larger or equal with immediate jump
                     cout<<"branch with larger"<<endl;
                     if(registe.getflag(alu_result->inst.operands[1])!= 0 || registe.getflag(alu_result->inst.operands[2])!= 0){
                         cout<<"Not finished for R"<< alu_result->inst.operands[1]<<":"<<registe.getflag(alu_result->inst.operands[1])<<" R"<<alu_result->inst.operands[2]<<":"<<registe.getflag(alu_result->inst.operands[2])<<endl;
@@ -121,6 +121,28 @@ void PipeLine::run_cycle(int model)
                         return;
                     }
                     else if(registe.get(alu_result->inst.operands[1]) <= registe.get(alu_result->inst.operands[2]))
+                    {
+                        /*while(!execute.execute_queue.empty()){
+                            execute.execute_queue.pop();
+                        }*/
+                        while(!decode.decode_queue.empty()){
+                            decode.decode_queue.pop();
+                        }
+                        while(!fetch.fetch_queue.empty()){
+                            fetch.fetch_queue.pop();
+                        }
+                        cout<<"The new pc:"<<pc<<"   "<<alu_result->inst.address<<endl;
+                        pc = pc-3 + alu_result->inst.address;
+                    }
+                    break;
+                case 2://larger with immediate jump
+                    cout<<"branch with larger or equal"<<endl;
+                    if(registe.getflag(alu_result->inst.operands[1])!= 0 || registe.getflag(alu_result->inst.operands[2])!= 0){
+                        cout<<"Not finished for R"<< alu_result->inst.operands[1]<<":"<<registe.getflag(alu_result->inst.operands[1])<<" R"<<alu_result->inst.operands[2]<<":"<<registe.getflag(alu_result->inst.operands[2])<<endl;
+
+                        return;
+                    }
+                    else if(registe.get(alu_result->inst.operands[1]) < registe.get(alu_result->inst.operands[2]))
                     {
                         /*while(!execute.execute_queue.empty()){
                             execute.execute_queue.pop();

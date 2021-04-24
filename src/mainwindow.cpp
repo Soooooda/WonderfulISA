@@ -50,6 +50,16 @@ MainWindow::MainWindow(QWidget *parent)
     register_header<<"value";
     ui->registerTable->setHorizontalHeaderLabels(register_header);
 
+    //vector registers
+    ui->vectorRegisterTable->setRowCount(16);
+    ui->vectorRegisterTable->setColumnCount(2);
+    ui->vectorRegisterTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->vectorRegisterTable->resizeRowsToContents();
+    QStringList vector_register_header;
+    vector_register_header<<"vector 0"<<"vector 1";
+    ui->vectorRegisterTable->setHorizontalHeaderLabels(vector_register_header);
+
+
     //pipeline mode
     ui->pipelineModeBox->addItem("No Pipeline");
     ui->pipelineModeBox->addItem("With Pipeline");
@@ -69,6 +79,8 @@ MainWindow::MainWindow(QWidget *parent)
     refresh_cache();
     refresh_memory();
     refresh_pipeline();
+    refresh_register();
+    refresh_vector_register();
 
 
 }
@@ -116,6 +128,21 @@ void MainWindow::refresh_register()
         ui->registerTable->setItem(ptr,0,new QTableWidgetItem(QString::fromStdString(to_string(pipeline.registe.get(ptr)))));
     }
     ui->registerTable->show();
+}
+
+void MainWindow::refresh_vector_register()
+{
+    //getvector
+
+    for(int16_t vector_idx = 0; vector_idx<2; vector_idx++)
+    {
+        for(int16_t ptr = 0; ptr<16;ptr+=1)
+        {
+            ui->vectorRegisterTable->setItem(ptr,vector_idx,new QTableWidgetItem(QString::fromStdString(to_string(pipeline.registe.getvector(vector_idx, ptr)))));
+        }
+    }
+
+    ui->vectorRegisterTable->show();
 }
 
 void MainWindow::refresh_pipeline()
@@ -193,6 +220,7 @@ void MainWindow::on_next_clicked()
         refresh_memory();
         refresh_cache();
         refresh_pipeline();
+        refresh_vector_register();
         time_cycle_count+=1;
         ui->TimeCycleText->setText(QString::fromStdString(to_string(time_cycle_count)));
     }
@@ -213,6 +241,7 @@ void MainWindow::on_nextHundred_clicked()
         refresh_memory();
         refresh_cache();
         refresh_pipeline();
+        refresh_vector_register();
         time_cycle_count+=100;
         ui->TimeCycleText->setText(QString::fromStdString(to_string(time_cycle_count)));
     }

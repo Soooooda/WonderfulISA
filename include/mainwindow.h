@@ -33,6 +33,8 @@ private slots:
 
     void refresh_register();
 
+    void refresh_vector_register();
+
     void refresh_pipeline();
 
     void refresh_machine_code(int32_t* machine_code, int16_t size);

@@ -12,7 +12,7 @@ output* Decode::execute(Register *registe)
         cout<<"decode skip"<<endl;
         return NULL;
     }
-    output* result = (struct output *) malloc(sizeof(output));
+    output* result = new output();
     int32_t instrut = decode_queue.front();
     int32_t opcode = (instrut & 0x7c000000)>>26;
     int32_t Rd = (instrut & 0x00780000)>>19;
@@ -35,10 +35,11 @@ output* Decode::execute(Register *registe)
         case 2: //ADDI
             result->inst.instruction_operator = 2;
             result->inst.operands[0] = Rd;
+            result->inst.operands[1] = Rn;
             result->inst.address = immediate;
             registe->add(Rd);
             //cout<<"The command is ADDI R"<<Rd<<" "<<immediate<<endl;
-            result->ins_text = "ADDI R"+to_string(Rd)+" "+to_string(immediate);
+            result->ins_text = "ADDI R"+to_string(Rd)+" R"+to_string(Rn)+" "+to_string(immediate);
             break;
         case 4:  //SUB
             result->inst.instruction_operator = 4;
@@ -80,7 +81,7 @@ output* Decode::execute(Register *registe)
             result->inst.address = addr;
             registe->add(Rd);
             //cout<<"The command is LOADI R"<<Rd<<" "<<addr<<" "<<endl;
-            result->ins_text = "LOADI R"+to_string(Rd)+" "+to_string(addr);
+            result->ins_text += "LOADI R";//+to_string(Rd)+" "+to_string(addr);
             break;
         case 12: //LOADV
             result->inst.instruction_operator = 12;
@@ -88,7 +89,7 @@ output* Decode::execute(Register *registe)
             result->inst.operands[1] = Rn;
             result->inst.operands[2] = Rm;
             result->inst.cmp = flag;
-            result->ins_text = "LOADV R"+to_string(Rd)+" R"+to_string(Rn)+" R"+to_string(Rm)+" "+to_string(flag);
+            result->ins_text += "LOADV R";//+to_string(Rd)+" R"+to_string(Rn)+" R"+to_string(Rm)+" "+to_string(flag);
             break;
         case 13://STORE
             result->inst.instruction_operator = 13;

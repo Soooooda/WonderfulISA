@@ -31,7 +31,7 @@ int32_t Compiler::proccess_add(vector<string> tokens)
     {
         int32_t rd = stoi(tokens[1].erase(0, 1));
         int32_t rn = stoi(tokens[2].erase(0, 1));
-        int32_t immediate = stoi(tokens[3].erase(0, 1));
+        int32_t immediate = stoi(tokens[3]);
         code = code | ADDI | (rd<<RD_OFFSET) | (rn<<RN_OFFSET) | (immediate<<IMMEDIATE_OFFSET);
     }
     return code;
@@ -51,7 +51,7 @@ int32_t Compiler::proccess_sub(vector<string> tokens)
     {
         int32_t rd = stoi(tokens[1].erase(0, 1));
         int32_t rn = stoi(tokens[2].erase(0, 1));
-        int32_t immediate = stoi(tokens[3].erase(0, 1));
+        int32_t immediate = stoi(tokens[3]);
         code = code | SUBI | (rd<<RD_OFFSET) | (rn<<RN_OFFSET) | (immediate<<IMMEDIATE_OFFSET);
     }
     return code;
@@ -77,6 +77,7 @@ int32_t Compiler::proccess_mul(vector<string> tokens)
 
 int32_t Compiler::proccess_load(vector<string> tokens)
 {
+    cout<<"YES"<<endl;
     int32_t code = 0;
     if(tokens[0]=="LOADI")
     {
@@ -86,11 +87,11 @@ int32_t Compiler::proccess_load(vector<string> tokens)
     }
     if(tokens[0] == "LOADV")
     {
-        int32_t code = 0;
         int32_t rd = stoi(tokens[1].erase(0, 1));
-        int32_t rn = stoi(tokens[1].erase(0, 1));
-        int32_t rm = stoi(tokens[1].erase(0, 1));
-        int32_t flag = stoi(tokens[1].erase(0, 1));
+        int32_t rn = stoi(tokens[2].erase(0, 1));
+        int32_t rm = stoi(tokens[3].erase(0, 1));
+        int32_t flag = stoi(tokens[4]);
+        cout<<"Rd "<<rd<<"Rn "<<rn<<"Rm "<<rm;
         code = code | LOADV | (rd<<RD_OFFSET) | (rn<<RN_OFFSET) | (rm<<RM_OFFSET) | (flag<<BRANCH_FLAG_OFFSET);
 
     }

@@ -18,6 +18,7 @@ void WriteBack::execute(Register *registe)
         if(temp != 13 && temp != 14 &&temp != 20 && temp != 21 && temp != 31 && temp != 12){
             registe->set(data->inst.operands[0],data->value);
             registe->min(data->inst.operands[0]);
+            cout<<" Rd:"<<data->inst.operands[0]<<" value"<<data->value<<endl;
 
         }
         if(temp == 12){
@@ -46,8 +47,13 @@ void WriteBack::execute(Register *registe)
                     registe->set_vector(type,i,0);
                 }
             }
+        for(int i=0;i<16;i++){
+            cout<<" "<<registe->getvector(0,i);
         }
-        
+        for(int i=0;i<16;i++){
+            cout<<" "<<registe->getvector(1,i);
+        }
+        }
     }
     //free(data);
     return;

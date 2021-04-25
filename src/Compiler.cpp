@@ -125,6 +125,12 @@ int32_t Compiler::proccess_store(vector<string> tokens)
         int32_t immediate = stoi(tokens[2]);
         code = code | STOREI | (rd<<RD_OFFSET) | (immediate<<IMMEDIATE_OFFSET);
     }
+    if(tokens[0]=="STORE")
+    {
+        int32_t rd = stoi(tokens[1].erase(0, 1));
+        int32_t rn= stoi(tokens[2].erase(0, 1));
+        code = code | STORE | (rd<<RD_OFFSET) | (rn<<RN_OFFSET);
+    }
     return code;
 }
 int32_t Compiler::proccess_bit(vector<string> tokens)

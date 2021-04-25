@@ -53,10 +53,11 @@ output* Decode::execute(Register *registe)
         case 5: //SUBI
             result->inst.instruction_operator = 5;
             result->inst.operands[0] = Rd;
+            result->inst.operands[1] = Rn;
             result->inst.address = immediate;
             registe->add(Rd);
             //cout<<"The command is SUBI R"<<Rd<<" "<<immediate<<endl;
-            result->ins_text = "SUBI R"+to_string(Rd)+" "+to_string(immediate);
+            result->ins_text = "SUBI R"+to_string(Rd)+" R"+to_string(Rn)+to_string(immediate);
             break;
         case 7:  //MUL
             result->inst.instruction_operator = 7;
@@ -81,7 +82,7 @@ output* Decode::execute(Register *registe)
             result->inst.address = addr;
             registe->add(Rd);
             //cout<<"The command is LOADI R"<<Rd<<" "<<addr<<" "<<endl;
-            result->ins_text += "LOADI R";//+to_string(Rd)+" "+to_string(addr);
+            result->ins_text += "LOADI R"+to_string(Rd)+" "+to_string(addr);
             break;
         case 12: //LOADV
             result->inst.instruction_operator = 12;
@@ -89,7 +90,7 @@ output* Decode::execute(Register *registe)
             result->inst.operands[1] = Rn;
             result->inst.operands[2] = Rm;
             result->inst.cmp = flag;
-            result->ins_text += "LOADV R";//+to_string(Rd)+" R"+to_string(Rn)+" R"+to_string(Rm)+" "+to_string(flag);
+            result->ins_text += "LOADV R"+to_string(Rd)+" R"+to_string(Rn)+" R"+to_string(Rm)+" "+to_string(flag);
             break;
         case 13://STORE
             result->inst.instruction_operator = 13;

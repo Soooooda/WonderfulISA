@@ -110,7 +110,13 @@ void PipeLine::run_cycle(int model)
                             fetch.fetch_queue.pop();
                         }
                         cout<<"The new pc:"<<pc<<"   "<<alu_result->inst.address<<endl;
-                        pc = pc-3 + alu_result->inst.address ;
+                        if(model == 4 || model == 2)
+                        {
+                            pc = pc-3 + alu_result->inst.address;
+                        }
+                        else{
+                            pc = pc-1 + alu_result->inst.address;
+                        }
                     }
                     break;
                 case 1://larger or equal with immediate jump
@@ -132,7 +138,13 @@ void PipeLine::run_cycle(int model)
                             fetch.fetch_queue.pop();
                         }
                         cout<<"The new pc:"<<pc<<"   "<<alu_result->inst.address<<endl;
-                        pc = pc-3 + alu_result->inst.address;
+                        if(model == 4 || model == 2)
+                        {
+                            pc = pc-3 + alu_result->inst.address;
+                        }
+                        else{
+                            pc = pc-1 + alu_result->inst.address;
+                        }
                     }
                     break;
                 case 2://larger with immediate jump
@@ -154,7 +166,13 @@ void PipeLine::run_cycle(int model)
                             fetch.fetch_queue.pop();
                         }
                         cout<<"The new pc:"<<pc<<"   "<<alu_result->inst.address<<endl;
-                        pc = pc-3 + alu_result->inst.address;
+                        if(model == 4 || model == 2)
+                        {
+                            pc = pc-3 + alu_result->inst.address;
+                        }
+                        else{
+                            pc = pc-1 + alu_result->inst.address;
+                        }
                     }
                     break;
                 default:

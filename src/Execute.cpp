@@ -79,9 +79,9 @@ output *Execute::execute(Register* registe)
         cout<<"minus:"<<data->value<<endl;
     }
     else if (data->inst.instruction_operator == 26)
-    {//MUL
+    {//MULV
         data->value = 0;
-        for(int i =0; i<16; i++){
+        for(int i =0; i<50; i++){
             data->value += registe->getvector(1,i)*registe->getvector(0,i);
         }
         data->register_id = data->inst.operands[0];

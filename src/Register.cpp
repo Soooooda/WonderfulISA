@@ -6,6 +6,9 @@ Register::Register()
     {
         registers[i] = 0;
         flags[i] = 0;
+        
+    }
+    for(int16_t i = 0;i<50;i++){
         vector_registers[0][i] = 0;
         vector_registers[1][i] = 0;
     }

@@ -18,12 +18,12 @@ output *MemoryAccess::execute(Simulator* simulator, Register* registe, int model
         if (data->inst.instruction_operator == 10)//LOAD
         {
             if(simulator->l1_cache.request_cache(data->inst.address) == -1 || model == 1 || model == 3){
-                simulator->read_memory(registe->get(data->inst.operands[1]));
+                data->value = simulator->read_memory(registe->get(data->inst.operands[1]));
                 cout<<"Start Store"<<endl;
                 this->time = 3;
             }
             else{
-                simulator->read_memory(registe->get(data->inst.operands[1]));
+                data->value = simulator->read_memory(registe->get(data->inst.operands[1]));
                 cout<<"Start Store"<<endl;
                 this->time = 1;
             }

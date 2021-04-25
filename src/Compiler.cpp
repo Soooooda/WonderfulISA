@@ -79,6 +79,12 @@ int32_t Compiler::proccess_load(vector<string> tokens)
 {
     cout<<"YES"<<endl;
     int32_t code = 0;
+    if(tokens[0]=="LOAD")
+    {
+        int32_t rd = stoi(tokens[1].erase(0, 1));
+        int32_t rn = stoi(tokens[2].erase(0, 1));
+        code = code | LOAD | (rd<<RD_OFFSET) | (rn<<RN_OFFSET);
+    }
     if(tokens[0]=="LOADI")
     {
         int32_t rd = stoi(tokens[1].erase(0, 1));

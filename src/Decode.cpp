@@ -95,8 +95,7 @@ output* Decode::execute(Register *registe)
             result->inst.instruction_operator = 13;
             result->inst.operands[0] = Rd;
             result->inst.operands[1] = Rn;
-            registe->add(Rd);
-            //cout<<"The command is "LOAD R"<<to_string(Rd)<<" R"<<to_string(Rn)<<endl;
+            //cout<<"The command is "store R"<<to_string(Rd)<<" R"<<to_string(Rn)<<endl;
             result->ins_text = "STORE R"+to_string(Rd)+" R"+to_string(Rn);
             break;
         case 14: //STOREI

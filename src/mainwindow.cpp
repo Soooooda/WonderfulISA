@@ -78,19 +78,32 @@ MainWindow::MainWindow(QWidget *parent)
     pipeline.simulator.instantiate();
 
     //initial Memory
-    pipeline.simulator.write_memory(0,500);
-    pipeline.simulator.write_memory(1,50);
-    pipeline.simulator.write_memory(2,50);
-    pipeline.simulator.write_memory(3,3500);
-    pipeline.simulator.write_memory(4,50);
-    pipeline.simulator.write_memory(5,50);
-    pipeline.simulator.write_memory(6,7000);
+    pipeline.simulator.write_memory(0,30);
+    pipeline.simulator.write_memory(1,3);
+    pipeline.simulator.write_memory(2,2);
+    pipeline.simulator.write_memory(3,70);
+    pipeline.simulator.write_memory(4,4);
+    pipeline.simulator.write_memory(5,3);
+    pipeline.simulator.write_memory(6,400);
     pipeline.simulator.write_memory(7,1);
-
-
-    for(int i = 500;i<7000;i++){
-        pipeline.simulator.write_memory(i,rand() % 10);
-    }
+    pipeline.simulator.write_memory(30,5);
+    pipeline.simulator.write_memory(31,32);
+    pipeline.simulator.write_memory(32,1);
+    pipeline.simulator.write_memory(33,5);
+    pipeline.simulator.write_memory(34,2);
+    pipeline.simulator.write_memory(35,3);
+    pipeline.simulator.write_memory(70,3);
+    pipeline.simulator.write_memory(71,6);
+    pipeline.simulator.write_memory(72,43);
+    pipeline.simulator.write_memory(73,6);
+    pipeline.simulator.write_memory(74,76);
+    pipeline.simulator.write_memory(75,3);
+    pipeline.simulator.write_memory(76,4);
+    pipeline.simulator.write_memory(77,7);
+    pipeline.simulator.write_memory(78,8);
+    pipeline.simulator.write_memory(79,6);
+    pipeline.simulator.write_memory(80,4);
+    pipeline.simulator.write_memory(81,2);
 
     refresh_cache();
     refresh_memory();

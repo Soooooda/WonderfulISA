@@ -49,6 +49,8 @@ private slots:
 
 
 
+    void on_RunToFinalButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

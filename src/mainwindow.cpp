@@ -79,11 +79,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     //initial Memory
     pipeline.simulator.write_memory(0,500);
-    pipeline.simulator.write_memory(1,50);
-    pipeline.simulator.write_memory(2,50);
+    pipeline.simulator.write_memory(1,3);//row
+    pipeline.simulator.write_memory(2,2);//column
     pipeline.simulator.write_memory(3,3500);
-    pipeline.simulator.write_memory(4,50);
-    pipeline.simulator.write_memory(5,50);
+    pipeline.simulator.write_memory(4,2);//row
+    pipeline.simulator.write_memory(5,3);//column
     pipeline.simulator.write_memory(6,7000);
     pipeline.simulator.write_memory(7,1);
 
@@ -260,5 +260,26 @@ void MainWindow::on_nextHundred_clicked()
         refresh_vector_register();
         time_cycle_count+=100;
         ui->TimeCycleText->setText(QString::fromStdString(to_string(time_cycle_count)));
+    }
+}
+
+void MainWindow::on_RunToFinalButton_clicked()
+{
+    if(instruction_clicked)
+    {
+        int32_t mode = getRunningStatus();
+
+        while(pipeline.pipeLine_pc[4]!="HALT")
+        {
+            time_cycle_count+=1;
+            pipeline.run_cycle(mode);
+            ui->TimeCycleText->setText(QString::fromStdString(to_string(time_cycle_count)));
+        }
+        refresh_register();
+        refresh_memory();
+        refresh_cache();
+        refresh_pipeline();
+        refresh_vector_register();
+
     }
 }

@@ -131,9 +131,6 @@ void MainWindow::refresh_memory()
 
     for(int16_t ptr = 0; ptr<10000;ptr+=1)
     {
-        cout<<"---"<<endl;
-        cout<<ptr<<endl;
-        cout<<memory[ptr]<<endl;
         ui->memoryTable->setItem(ptr,0,new QTableWidgetItem(QString::fromStdString(to_string(ptr))));
         ui->memoryTable->setItem(ptr,1,new QTableWidgetItem(QString::fromStdString(to_string(memory[ptr]))));
     }
@@ -144,8 +141,6 @@ void MainWindow::refresh_register()
 {
     for(int16_t ptr = 0; ptr<16;ptr+=1)
     {
-        cout<<"register"<<endl;
-        cout<<pipeline.registe.get(ptr)<<endl;
         ui->registerTable->setItem(ptr,0,new QTableWidgetItem(QString::fromStdString(to_string(pipeline.registe.get(ptr)))));
     }
     ui->registerTable->show();

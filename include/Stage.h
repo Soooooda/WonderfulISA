@@ -21,7 +21,7 @@ struct output
     int16_t pc;
     instruction inst;
     string ins_text;
-    int16_t vector[16];
+    int16_t vector[50];
 };
 
 class Stage

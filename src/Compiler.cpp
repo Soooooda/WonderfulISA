@@ -184,7 +184,7 @@ int32_t Compiler::get_machine_code(string assembly)
         return proccess_add(tokens);
     if(opcode=="MUL" || opcode=="MULV")
         return proccess_mul(tokens);
-    if(opcode=="SUB" || opcode =="SUBI")
+    if(opcode=="SUB")
         return proccess_sub(tokens);
     if(opcode=="LOAD" || opcode=="LOADI" || opcode == "LOADV")
         return proccess_load(tokens);

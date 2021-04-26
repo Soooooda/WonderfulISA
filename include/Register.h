@@ -7,7 +7,7 @@ class Register
     public:
         Register();
         int16_t registers[16];
-        int16_t vector_registers[2][16];
+        int16_t vector_registers[2][50];
         int16_t flags[16];
         int16_t get(int16_t index);
         int16_t getflag(int16_t index);

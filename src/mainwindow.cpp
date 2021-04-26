@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->registerTable->setHorizontalHeaderLabels(register_header);
 
     //vector registers
-    ui->vectorRegisterTable->setRowCount(16);
+    ui->vectorRegisterTable->setRowCount(50);
     ui->vectorRegisterTable->setColumnCount(2);
     ui->vectorRegisterTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->vectorRegisterTable->resizeRowsToContents();
@@ -78,32 +78,18 @@ MainWindow::MainWindow(QWidget *parent)
     pipeline.simulator.instantiate();
 
     //initial Memory
-    pipeline.simulator.write_memory(0,30);
-    pipeline.simulator.write_memory(1,3);
-    pipeline.simulator.write_memory(2,2);
-    pipeline.simulator.write_memory(3,70);
-    pipeline.simulator.write_memory(4,4);
-    pipeline.simulator.write_memory(5,3);
-    pipeline.simulator.write_memory(6,400);
+    pipeline.simulator.write_memory(0,500);
+    pipeline.simulator.write_memory(1,50);
+    pipeline.simulator.write_memory(2,50);
+    pipeline.simulator.write_memory(3,3500);
+    pipeline.simulator.write_memory(4,50);
+    pipeline.simulator.write_memory(5,50);
+    pipeline.simulator.write_memory(6,7000);
     pipeline.simulator.write_memory(7,1);
-    pipeline.simulator.write_memory(30,5);
-    pipeline.simulator.write_memory(31,32);
-    pipeline.simulator.write_memory(32,1);
-    pipeline.simulator.write_memory(33,5);
-    pipeline.simulator.write_memory(34,2);
-    pipeline.simulator.write_memory(35,3);
-    pipeline.simulator.write_memory(70,3);
-    pipeline.simulator.write_memory(71,6);
-    pipeline.simulator.write_memory(72,43);
-    pipeline.simulator.write_memory(73,6);
-    pipeline.simulator.write_memory(74,76);
-    pipeline.simulator.write_memory(75,3);
-    pipeline.simulator.write_memory(76,4);
-    pipeline.simulator.write_memory(77,7);
-    pipeline.simulator.write_memory(78,8);
-    pipeline.simulator.write_memory(79,6);
-    pipeline.simulator.write_memory(80,4);
-    pipeline.simulator.write_memory(81,2);
+
+    for(int i = 500;i<7000;i++){
+        pipeline.simulator.write_memory(i,rand() % 10);
+    }
 
     refresh_cache();
     refresh_memory();
@@ -144,7 +130,11 @@ void MainWindow::refresh_memory()
 
     for(int16_t ptr = 0; ptr<10000;ptr+=1)
     {
+        cout<<"---"<<endl;
+        cout<<ptr<<endl;
+        cout<<memory[ptr]<<endl;
         ui->memoryTable->setItem(ptr,0,new QTableWidgetItem(QString::fromStdString(to_string(ptr))));
+
         ui->memoryTable->setItem(ptr,1,new QTableWidgetItem(QString::fromStdString(to_string(memory[ptr]))));
     }
     ui->memoryTable->show();
@@ -154,6 +144,8 @@ void MainWindow::refresh_register()
 {
     for(int16_t ptr = 0; ptr<16;ptr+=1)
     {
+        cout<<"register"<<endl;
+        cout<<pipeline.registe.get(ptr)<<endl;
         ui->registerTable->setItem(ptr,0,new QTableWidgetItem(QString::fromStdString(to_string(pipeline.registe.get(ptr)))));
     }
     ui->registerTable->show();
@@ -165,7 +157,7 @@ void MainWindow::refresh_vector_register()
 
     for(int16_t vector_idx = 0; vector_idx<2; vector_idx++)
     {
-        for(int16_t ptr = 0; ptr<16;ptr+=1)
+        for(int16_t ptr = 0; ptr<50;ptr+=1)
         {
             ui->vectorRegisterTable->setItem(ptr,vector_idx,new QTableWidgetItem(QString::fromStdString(to_string(pipeline.registe.getvector(vector_idx, ptr)))));
         }

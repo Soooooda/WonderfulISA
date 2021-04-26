@@ -31,7 +31,7 @@ void WriteBack::execute(Register *registe)
                 {
                     registe->set_vector(type,i,data->vector[i]);
                 }
-                for(int i = row; i <16; i++)
+                for(int i = row; i <50; i++)
                 {
                     registe->set_vector(type,i,0);
                 }
@@ -42,15 +42,15 @@ void WriteBack::execute(Register *registe)
                 {
                     registe->set_vector(type,i,data->vector[i]);
                 }
-                for(int i = col; i <16; i++)
+                for(int i = col; i <50; i++)
                 {
                     registe->set_vector(type,i,0);
                 }
             }
-        for(int i=0;i<16;i++){
+        for(int i=0;i<50;i++){
             cout<<" "<<registe->getvector(0,i);
         }
-        for(int i=0;i<16;i++){
+        for(int i=0;i<50;i++){
             cout<<" "<<registe->getvector(1,i);
         }
         }

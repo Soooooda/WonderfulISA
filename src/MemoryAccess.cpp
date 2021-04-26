@@ -20,7 +20,7 @@ output *MemoryAccess::execute(Simulator* simulator, Register* registe, int model
             if(simulator->l1_cache.request_cache(data->inst.address) == -1 || model == 1 || model == 3){
                 data->value = simulator->read_memory(registe->get(data->inst.operands[1]));
                 cout<<"Start Store"<<endl;
-                this->time = 3;
+                this->time = 100;
             }
             else{
                 data->value = simulator->read_memory(registe->get(data->inst.operands[1]));
@@ -33,7 +33,7 @@ output *MemoryAccess::execute(Simulator* simulator, Register* registe, int model
             if(simulator->l1_cache.request_cache(data->inst.address) == -1 || model == 1 || model == 3){
                 data->value = simulator->read_memory(data->inst.address);
                 cout<<"Start Load"<<endl;
-                this->time = 3;
+                this->time = 100;
             }
             else{
                 data->value = simulator->read_memory(data->inst.address);
@@ -69,7 +69,7 @@ output *MemoryAccess::execute(Simulator* simulator, Register* registe, int model
                     if(simulator->l1_cache.request_cache(data->inst.address) == -1 || model == 1 || model == 3){
                         data->vector[i]= simulator->read_memory(init_address);
                         init_address += row;
-                        this->time+=3;
+                        this->time+=100;
                     }
                     else{
                         data->vector[i] = simulator->read_memory(data->inst.address);
@@ -86,7 +86,7 @@ output *MemoryAccess::execute(Simulator* simulator, Register* registe, int model
                 int16_t address = registe->get(data->inst.operands[1]);
                 simulator->write_memory(address, registe->get(data->inst.operands[0]));
                 cout<<"Start Store"<<endl;
-                this->time = 3;
+                this->time = 100;
             }
             else{
                 int16_t address = registe->get(data->inst.operands[1]);
@@ -100,7 +100,7 @@ output *MemoryAccess::execute(Simulator* simulator, Register* registe, int model
             if(simulator->l1_cache.request_cache(data->inst.address) == -1 || model == 1 || model == 3){
                 simulator->write_memory(data->inst.address, registe->get(data->inst.operands[0]));
                 cout<<"Start Store"<<endl;
-                this->time = 3;
+                this->time = 100;
             }
             else{
                 simulator->write_memory(data->inst.address, registe->get(data->inst.operands[0]));

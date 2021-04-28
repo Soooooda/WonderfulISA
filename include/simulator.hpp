@@ -14,7 +14,9 @@ class Simulator
         Cache l2_cache;
         Simulator();
         string write_memory(int16_t address, int16_t value);
+        string write_instruction(int16_t address, int16_t value);
         int16_t read_memory(int16_t address);
+        int16_t read_instruction(int16_t address);
         void instantiate();
 };
 #endif // SIMULATOR_HPP

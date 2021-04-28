@@ -29,8 +29,10 @@ void PipeLine::read_instructions(string *s, int16_t size, int32_t* machine_code)
         cout<<"ins"<<ins<<endl;
         int16_t part2 = ins&0x0000ffff;
         cout<<"part2: "<<part2<<endl;
-        simulator.write_memory(base+i*2,part1);
-        simulator.write_memory(base +i*2 +1,part2);
+        simulator.write_instruction(base+i*2,part1);
+        simulator.write_instruction(base +i*2 +1,part2);
+        //simulator.write_memory(base+i*2,part1);
+        //simulator.write_memory(base +i*2 +1,part2);
     }
 }
 

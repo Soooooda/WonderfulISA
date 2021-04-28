@@ -16,8 +16,10 @@ int32_t Fetch::execute(Simulator *simulator)
     int16_t pc = fetch_queue.front();
     cout<<"pc:"<<pc<<endl;
     fetch_queue.pop();
-    int16_t part1 = simulator->read_memory(base+pc*2);
-    int16_t part2 = simulator->read_memory(base+pc*2+1);
+    int16_t part1 = simulator->read_instruction(base + pc*2);
+    int16_t part2 = simulator->read_instruction(base + pc*2+1);
+    //int16_t part1 = simulator->read_memory(base+pc*2);
+    //int16_t part2 = simulator->read_memory(base+pc*2+1);
     int32_t temp_instruction = 0;
     if(part2<0){
         int32_t temp = (~part2);

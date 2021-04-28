@@ -136,11 +136,11 @@ int16_t* Cache::get_block(int16_t line)
 
 void Cache::view()
 {
-    printf("===============LRU status===============\n");
-    for(int16_t ptr = 0; ptr<cache_size;ptr+=1)
-    {
-        printf("header: 0x%04X valid: %2d dirty: %2d values: %10d %10d %10d %10d lru: %10d\n",cache[ptr].header&TAG_INDEX_FLAG, cache[ptr].header&VALID_FLAG, (cache[ptr].header&DIRTY_FLAG)>>1, cache[ptr].offset[0],cache[ptr].offset[1],cache[ptr].offset[2],cache[ptr].offset[3],cache[ptr].lru);
-    }
-    printf("===============LRU status===============\n\n");
+    //printf("===============LRU status===============\n");
+    //for(int16_t ptr = 0; ptr<cache_size;ptr+=1)
+    //{
+        //printf("header: 0x%04X valid: %2d dirty: %2d values: %10d %10d %10d %10d lru: %10d\n",cache[ptr].header&TAG_INDEX_FLAG, cache[ptr].header&VALID_FLAG, (cache[ptr].header&DIRTY_FLAG)>>1, cache[ptr].offset[0],cache[ptr].offset[1],cache[ptr].offset[2],cache[ptr].offset[3],cache[ptr].lru);
+    //}
+    //printf("===============LRU status===============\n\n");
 }
 

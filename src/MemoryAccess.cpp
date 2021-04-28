@@ -2,7 +2,7 @@
 
 MemoryAccess::MemoryAccess()
 {
-    this->time = 0;
+    time = 0;
 }
 
 output *MemoryAccess::execute(Simulator* simulator, Register* registe, int model)
@@ -17,28 +17,30 @@ output *MemoryAccess::execute(Simulator* simulator, Register* registe, int model
         cout<<"Mem Opt:"<<data->inst.instruction_operator <<endl;
         if (data->inst.instruction_operator == 10)//LOAD
         {
-            if(simulator->l1_cache.request_cache(data->inst.address) == -1 || model == 1 || model == 3){
+            if(simulator->l1_cache.request_cache(registe->get(data->inst.operands[1])) == -1 || model == 1 || model == 2){
                 data->value = simulator->read_memory(registe->get(data->inst.operands[1]));
-                cout<<"Start Store"<<endl;
-                this->time = 100;
+                //cout<<"Start LAOD"<<endl;
+                //cout<<"cache:"<<simulator->l1_cache.request_cache(registe->get(data->inst.operands[1]))<<endl;
+                //cout<<"model:"<<model<<endl;
+                time = 100;
             }
             else{
                 data->value = simulator->read_memory(registe->get(data->inst.operands[1]));
-                cout<<"Start Store"<<endl;
-                this->time = 1;
+                cout<<"Start LOAD!!!!!"<<endl;
+                time = 1;
             }
         } 
         else if (data->inst.instruction_operator == 11) //LOADI
         {
-            if(simulator->l1_cache.request_cache(data->inst.address) == -1 || model == 1 || model == 3){
+            if(simulator->l1_cache.request_cache(data->inst.address) == -1 || model == 1 || model == 2){
                 data->value = simulator->read_memory(data->inst.address);
-                cout<<"Start Load"<<endl;
-                this->time = 100;
+                //cout<<"Start Load"<<endl;
+                time = 100;
             }
             else{
                 data->value = simulator->read_memory(data->inst.address);
-                cout<<"Start Load"<<endl;
-                this->time = 1;
+                cout<<"Start Load!!!!!!"<<endl;
+                time = 1;
             }
         }
         else if (data->inst.instruction_operator == 12)//LOADV
@@ -51,30 +53,30 @@ output *MemoryAccess::execute(Simulator* simulator, Register* registe, int model
             if( type == 0)
             {
                 for(int i = 0; i < row; i++){
-                    if(simulator->l1_cache.request_cache(data->inst.address) == -1 || model == 1 || model == 3){
+                    if(simulator->l1_cache.request_cache(init_address) == -1 || model == 1 || model == 2){
                         data->vector[i]= simulator->read_memory(init_address);
                         init_address++;
-                        this->time+=3;
+                        time+=100;
                     }
                     else{
-                        data->vector[i] = simulator->read_memory(data->inst.address);
+                        data->vector[i] = simulator->read_memory(init_address);
                         init_address++;
-                        this->time++;
+                        time++;
                     }
                 }
             }
             else if(type == 1)
             {
                 for(int i = 0; i < col; i++){
-                    if(simulator->l1_cache.request_cache(data->inst.address) == -1 || model == 1 || model == 3){
+                    if(simulator->l1_cache.request_cache(init_address) == -1 || model == 1 || model == 2){
                         data->vector[i]= simulator->read_memory(init_address);
                         init_address += row;
-                        this->time+=100;
+                        time+=100;
                     }
                     else{
-                        data->vector[i] = simulator->read_memory(data->inst.address);
+                        data->vector[i] = simulator->read_memory(init_address);
                         init_address += row ;
-                        this->time++;
+                        time++;
                     }
                 }
             }
@@ -82,40 +84,42 @@ output *MemoryAccess::execute(Simulator* simulator, Register* registe, int model
         }  
         else if (data->inst.instruction_operator == 13)//STORE
         {
-            if(simulator->l1_cache.request_cache(data->inst.address) == -1 || model == 1 || model == 3){
-                int16_t address = registe->get(data->inst.operands[1]);
+            int16_t address = registe->get(data->inst.operands[1]);
+            if(simulator->l1_cache.request_cache(address) == -1 || model == 1 || model == 2){
                 simulator->write_memory(address, registe->get(data->inst.operands[0]));
-                cout<<"Start Store"<<endl;
-                this->time = 100;
+                //cout<<"Start Store"<<endl;
+                cout<<"cache:"<<simulator->l1_cache.request_cache(registe->get(data->inst.operands[1]))<<endl;
+                cout<<"model:"<<model<<endl;
+                cout<<"address:"<<address<<endl;
+                time = 100;
             }
             else{
-                int16_t address = registe->get(data->inst.operands[1]);
                 simulator->write_memory(address, registe->get(data->inst.operands[0]));
-                cout<<"Start Store"<<endl;
-                this->time = 1;
+                cout<<"Start Store!!!!!"<<endl;
+                time = 1;
             }
         }
         else if (data->inst.instruction_operator == 14)//STOREI
         {
-            if(simulator->l1_cache.request_cache(data->inst.address) == -1 || model == 1 || model == 3){
+            if(simulator->l1_cache.request_cache(data->inst.address) == -1 || model == 1 || model == 2){
                 simulator->write_memory(data->inst.address, registe->get(data->inst.operands[0]));
-                cout<<"Start Store"<<endl;
-                this->time = 100;
+                //cout<<"Start Store"<<endl;
+                time = 100;
             }
             else{
                 simulator->write_memory(data->inst.address, registe->get(data->inst.operands[0]));
-                cout<<"Start Store"<<endl;
-                this->time = 1;
+                cout<<"Start Store!!!!!"<<endl;
+                time = 1;
             }
         }
         else {
             return data;
         }
     }
-    this->time--;
+    time--;
 
     cout<<"mem time"<<this->time<<endl;
-    if (this->time == 0) {
+    if (time == 0) {
         if(data->inst.instruction_operator == 1){
             //registe->set(data->inst.operands[0],data->value);
         }

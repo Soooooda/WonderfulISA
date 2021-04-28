@@ -66,6 +66,11 @@ string Simulator::write_memory(int16_t address, int16_t value)
     l1_cache.view();
     return "ok";
 }
+string Simulator::write_instruction(int16_t address, int16_t value)
+{
+    memory[address] = value;
+    return "ok";
+}
 
 
 int16_t Simulator::read_memory(int16_t address)
@@ -103,4 +108,8 @@ int16_t Simulator::read_memory(int16_t address)
     cout<<block[offset]<<endl;
     l1_cache.view();
     return block[offset];
+}
+int16_t Simulator::read_instruction(int16_t address)
+{
+    return memory[address];
 }

@@ -78,18 +78,29 @@ MainWindow::MainWindow(QWidget *parent)
     pipeline.simulator.instantiate();
 
     //initial Memory
+
     pipeline.simulator.write_memory(0,500);
-    pipeline.simulator.write_memory(1,3);//row
-    pipeline.simulator.write_memory(2,2);//column
+    pipeline.simulator.write_memory(1,10);//row
+    pipeline.simulator.write_memory(2,10);//column
     pipeline.simulator.write_memory(3,3500);
-    pipeline.simulator.write_memory(4,2);//row
-    pipeline.simulator.write_memory(5,3);//column
+    pipeline.simulator.write_memory(4,10);//row
+    pipeline.simulator.write_memory(5,10);//column
     pipeline.simulator.write_memory(6,7000);
     pipeline.simulator.write_memory(7,1);
 
-
+    /*
+    pipeline.simulator.write_instruction(0,500);
+    pipeline.simulator.write_instruction(1,5);//row
+    pipeline.simulator.write_instruction(2,5);//column
+    pipeline.simulator.write_instruction(3,3500);
+    pipeline.simulator.write_instruction(4,5);//row
+    pipeline.simulator.write_instruction(5,5);//column
+    pipeline.simulator.write_instruction(6,7000);
+    pipeline.simulator.write_instruction(7,1);
+    */
     for(int i = 500;i<7000;i++){
-        pipeline.simulator.write_memory(i,rand() % 10);
+        pipeline.simulator.write_instruction(i,rand() % 10);
+        //pipeline.simulator.write_memory(i,rand() % 10);
     }
 
     refresh_cache();
